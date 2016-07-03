@@ -68,6 +68,13 @@
       radius: 400
     };
 
+    /**
+     * A utility function to create SVG dom tree
+     * @param {String} name The SVG element name
+     * @param {Object} attrs The attributes as they appear in DOM e.g. stroke-width and not strokeWidth
+     * @param {Array} children An array of children (can be created by this same function)
+     * @return The SVG element
+     */
     function svg(name, attrs, children) {
       var elem = document.createElementNS(SVG_NS, name);
       for(var attrName in attrs) {
@@ -133,7 +140,7 @@
      * Creates a Gauge object. This should be called without the 'new' operator. Various options
      * can be passed for the gauge:
      * {
-     *    dialStartAngle: The angle to start the dial. Default 135deg
+     *    dialStartAngle: The angle to start the dial. MUST be greater than dialEndAngle. Default 135deg
      *    dialEndAngle: The angle to end the dial. Default 45deg
      *    radius: The gauge's radius. Default 400
      *    max: The maximum value of the gauge. Default 100
@@ -148,9 +155,9 @@
           limit = opts.max || 100,
           value = normalize(opts.value || 0, limit),
           radius = opts.radius || 400,
+          displayValue = opts.displayValue === false ? false : true,
           startAngle = typeof(opts.dialStartAngle) === "undefined" ? 135 : opts.dialStartAngle,
           endAngle = typeof(opts.dialEndAngle) === "undefined" ? 45 : opts.dialEndAngle,
-
           gaugeTextElem,
           gaugeValuePath,
           instance;
@@ -188,7 +195,7 @@
           "d": pathString(radius, startAngle, startAngle) // value of 0
         });
 
-        var angle = getAngle(100, 360 - Math.abs(endAngle - startAngle));
+        var angle = getAngle(100, 360 - Math.abs(startAngle - endAngle));
         var flag = angle <= 180 ? 0 : 1;
         var gaugeElement = svg("svg", {"viewBox": "0 0 1000 1000", "class": "gauge"}, 
           [
@@ -208,10 +215,11 @@
 
       function updateGauge(theValue) {
         var val = getValueInPercentage(theValue, limit),
-            angle = getAngle(val, 360 - Math.abs(endAngle - startAngle)),
+            // angle = getAngle(val, 360 - Math.abs(endAngle - startAngle)),
+            angle = getAngle(val, 360 - Math.abs(startAngle - endAngle)),
             // this is because we are using arc greater than 180deg
             flag = angle <= 180 ? 0 : 1;
-        gaugeTextElem.textContent = Math.round(theValue);
+        (displayValue && (gaugeTextElem.textContent = Math.round(theValue)));
         gaugeValuePath.setAttribute("d", pathString(radius, startAngle, angle + startAngle, flag));
       }
 

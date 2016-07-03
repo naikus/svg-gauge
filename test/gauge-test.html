@@ -12,101 +12,220 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#2f434e" />
     <meta http-equiv="cleartype" content="on" />
-
+    <link rel="stylesheet" href="gauge-test.css" />
+    <link rel="stylesheet" href="dark.css" />
     <style>
-      body {
-        background-color: rgba(0,0,0,0.8);
+      .example {
+        overflow: auto;
+        padding: 10px;
+        box-sizing: border-box;
+        clear: both;
       }
-
-      /* ------------------- Default Style ------------------------- */
-      
-      .gauge-container {
-        width: 150px;
-        height: 120px;
-        display: block;
-        float: left;
+      .example > .code, .example > .display {
+        box-sizing: border-box;
         padding: 10px;
       }
-      .gauge-container > .gauge > .dial {
-        stroke: #334455;
-        stroke-width: 20;
-        fill: rgba(0,0,0,0);
+      .example > .code {
       }
-      .gauge-container > .gauge > .value {
-        stroke: rgb(47, 227, 255);
-        stroke-width: 30;
-        fill: rgba(0,0,0,0);
+      .example > .display {
+        text-align: center;
+        overflow: auto;
+        padding: 20px 0;
       }
-      .gauge-container > .gauge > .value-text {
-        fill: rgb(47, 227, 255);
-        font-family: sans, 'sans-serif';
-        font-weight: bold;
-        font-size: 10em;
+      .example > .display {
+        padding-left: 20%;
       }
-  
-      /* ------------------- Alternate Style ------------------------- */
 
-      .gauge-container.two {
+      pre {
+        padding: 0;
+        margin: 0;
       }
-      .gauge-container.two > .gauge > .dial {
-        stroke: #334455;
-        stroke-width: 100;
-      }
-      .gauge-container.two > .gauge > .value {
-        stroke: orange;
-        stroke-dasharray: none;
-        stroke-width: 130;
-      }
-      .gauge-container.two > .gauge > .value-text {
-        fill: orange;
-      }
-  
-  
-      /* ------------------- Alternate Style 2 ------------------------- */
 
-      .gauge-container.three {
-      }
-      .gauge-container.three > .gauge > .dial {
-        stroke: #334455;
-        stroke-width: 50;
-        stroke-dasharray: 125, 20;
-      }
-      .gauge-container.three > .gauge > .value {
-        stroke: #B0FF00;
-        stroke-dasharray: none;
-        stroke-width: 50;
-        stroke-dasharray: 125, 20;
-      }
-      .gauge-container.three > .gauge > .value-text {
-        fill: #B0FF00;
-      } 
+      @media only screen and (min-device-width: 600px) {
+        .example > .code {
+          width: 70%;
+        }
+        .example > .display {
+          width: 30%;
+        }
+        .example > .code {
+          float: left;
+        }
+        .example > .display {
+          float: right;
+          padding: 10px;
+        }
 
-
-      /* ------------------- Alternate Style 2 ------------------------- */
-
-      .gauge-container.four {
-      }
-      .gauge-container.four > .gauge > .dial {
-        stroke: #334455;
-        fill: "#334455";
-        stroke-width: 50;
-      }
-      .gauge-container.four > .gauge > .value {
-        stroke: #BE80FF;
-        stroke-dasharray: none;
-        stroke-width: 50;
-      }
-      .gauge-container.four > .gauge > .value-text {
-        fill: #BE80FF;
-      } 
     </style>
+
+    <script type="text/javascript" src="highlight.pack.js"> </script>
+    <script>hljs.initHighlightingOnLoad();</script>
   </head>
 
   <body>
-    <div id="gauge1" class="gauge-container"></div>
-    <div id="gauge2" class="gauge-container two"></div>
-    <div id="gauge3" class="gauge-container three"></div>
-    <div id="gauge4" class="gauge-container four"></div>
+    <h2>SVG Gauge</h2>
+    <h4>Minimalistic, zero dependency animated gauge widget</h4>
+    <p>
+      All the guages are styled via CSS. See gauge-test.css for styling for each of these gauges
+      below.
+    </p>
+
+    <div class="example">
+      <div class="code">
+        <pre>
+          <code class="html">&lt;div id="gauge1" class="gauge-container"&gt;&lt;/div&gt;</code>
+          <code class="javascript">
+            var gauge1 = Gauge(
+              document.getElementById("gauge1"), 
+              {
+                max: 100,
+                dialStartAngle: -90,
+                dialEndAngle: -90.001, 
+                value: 100
+              }
+            );</code>
+        </pre>
+      </div>
+      <div class="display">
+        <div id="gauge1" class="gauge-container"></div>
+      </div>
+    </div>
+    
+
+
+    <div class="example">
+      <div class="code">
+        <pre>
+          <code class="html">
+            &lt;div id="gauge2" class="gauge-container two"&gt;&lt;/div&gt;      
+          </code>
+          <code class="javascript">
+            var gauge2 = Gauge(
+              document.getElementById("gauge2"), 
+              {
+                max: 100,
+                dialStartAngle: 180,
+                dialEndAngle: 0, 
+                value: 50
+              }
+            );
+          </code>
+        </pre>
+      </div>
+      <div class="display">
+        <div id="gauge2" class="gauge-container two"></div>
+      </div>
+    </div>
+
+
+
+
+    <div class="example">
+      <div class="code">
+        <pre>
+          <code class="html">
+            &lt;div id="gauge3" class="gauge-container three"&gt;&lt;/div&gt;      
+          </code>
+          <code class="javascript">
+            var gauge3 = Gauge(
+              document.getElementById("gauge3"), 
+              {
+                max: 100, 
+                value: 50
+              }
+            );
+          </code>
+        </pre>
+      </div>
+      <div class="display">
+        <div id="gauge3" class="gauge-container three"></div>
+      </div>
+    </div>
+
+
+
+    <div class="example">
+      <div class="code">
+        <pre>
+          <code class="html">
+            &lt;div id="gauge4" class="gauge-container four"&gt;&lt;/div&gt;      
+          </code>
+          <code class="javascript">
+            var gauge4 = Gauge(
+              document.getElementById("gauge4"), 
+              {
+                max: 100,
+                dialStartAngle: 180,
+                dialEndAngle: -90, 
+                value: 50
+              }
+            );
+          </code>
+        </pre>
+      </div>
+      <div class="display">
+        <div id="gauge4" class="gauge-container four"></div>
+      </div>
+    </div>
+
+
+
+
+    <div class="example">
+      <div class="code">
+        <pre>
+          <code class="html">
+            &lt;div id="gauge5" class="gauge-container five"&gt;&lt;/div&gt;      
+          </code>
+          <code class="javascript">
+            var gauge5 = Gauge(
+              document.getElementById("gauge5"), 
+              {
+                max: 200,
+                dialStartAngle: 0,
+                dialEndAngle: -180, 
+                value: 50
+              }
+            );
+          </code>
+        </pre>
+      </div>
+      <div class="display">
+        <div id="gauge5" class="gauge-container five"></div>
+      </div>
+    </div>
+    
+
+
+
+    <div class="example">
+      <div class="code">
+        <pre>
+          <code class="html">
+            &lt;div id="gauge6" class="gauge-container six"&gt;&lt;/div&gt;      
+          </code>
+          <code class="javascript">
+            var gauge6 = Gauge(
+              document.getElementById("gauge6"), 
+              {
+                max: 100,
+                dialStartAngle: 90.01,
+                dialEndAngle: 89.99,
+                radius: 150,
+                displayValue: false, 
+                value: 50,
+              }
+            );
+          </code>
+        </pre>
+      </div>
+      <div class="display">
+        <div id="gauge6" class="gauge-container six"></div>
+      </div>
+    </div>
+
+
+    
 
     <script type="text/javascript" src="../src/gauge.js"> </script>
     <script>
@@ -148,16 +267,41 @@
         }
       );
 
+      var gauge5 = Gauge(
+        document.getElementById("gauge5"), 
+		    {
+          max: 200,
+          dialStartAngle: 0,
+          dialEndAngle: -180, 
+          value: 50
+        }
+      );
+
+      var gauge6 = Gauge(
+        document.getElementById("gauge6"), 
+		    {
+          max: 100,
+          dialStartAngle: 90.01,
+          dialEndAngle: 89.99,
+          radius: 150,
+          displayValue: false, 
+          value: 100,
+        }
+      );
+
       (function loop() {
         var value1 = Math.round(Math.random() * 100),
             value2 = Math.round(Math.random() * 100),
             value3 = Math.round(Math.random() * 100),
-            value4 = Math.round(Math.random() * 100);
+            value4 = Math.round(Math.random() * 100),
+            value5 = Math.round(Math.random() * 200);
             
         gauge1.setValueAnimated(value1, 1);
         gauge2.setValueAnimated(value2, 2);
         gauge3.setValueAnimated(value3, 1.5);
         gauge4.setValueAnimated(value4, 2);
+        gauge5.setValueAnimated(value5, 1);
+        gauge6.setValueAnimated(value1, 1);
         window.setTimeout(loop, 2500);
       })();
     </script>
