@@ -13,7 +13,14 @@
   }
 })(typeof window === "undefined" ? this : window, function(global, undefined) {
 
-  var document = global.document;
+  var document = global.document,
+    requestAnimationFrame = (global.requestAnimationFrame ||
+        global.mozRequestAnimationFrame ||
+        global.webkitRequestAnimationFrame ||
+        global.msRequestAnimationFrame ||
+        function(cb) {
+          return setTimeout(cb, 1000 / 60);
+        });
 
   // EXPERIMENTAL!!
   /**
@@ -47,11 +54,11 @@
       // console.log(progress + ", " + value);
       step(value);
       if(progress < 1) {
-        global.requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
       }
     }
     // start!
-    global.requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
   }
 
 
