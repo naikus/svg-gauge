@@ -3,7 +3,6 @@ Minmalistic, configurable, animated SVG gauge. Zero dependencies
 
 
 ### Usage
--
 
 HTML
 ```html
@@ -58,7 +57,7 @@ cpuGauge.gauge1.setValueAnimated(90, 1);
 ```
 
 #### Options
--
+
 |      Name            |                  Description                       |
 | -------------------- | ------------------------------------------------------------------------------------- |
 | ```dialStartAngle``` | The angle in degrees to start the dial (```135```)       |
