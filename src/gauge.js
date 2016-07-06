@@ -162,7 +162,7 @@
           limit = opts.max || 100,
           value = normalize(opts.value || 0, limit),
           radius = opts.radius || 400,
-          displayValue = opts.displayValue === false ? false : true,
+          displayValue = opts.showValue === false ? false : true,
           startAngle = typeof(opts.dialStartAngle) === "undefined" ? 135 : opts.dialStartAngle,
           endAngle = typeof(opts.dialEndAngle) === "undefined" ? 45 : opts.dialEndAngle,
           gaugeTextElem,
