@@ -59,13 +59,13 @@ cpuGauge.gauge1.setValueAnimated(90, 1);
 
 #### Options
 -
-|      Name        |                  Description                       |
-| ---------------- | ------------------------------------------------------------------------------------- |
-| ```dialStartAngle``` | The angle in degrees to start the dial (135)       |
-| ```dialEndAngle```   | The angle in degrees to end the dial. This MUST be less than dialStartAngle (45)  |
-| ```radius```         | The radius of the gauge |
-| ```max```            | The maximum value for the gauge  |
-| ```showValue```      | Whether to show the value at the center of the gauge (true) |
+|      Name            |                  Description                       |
+| -------------------- | ------------------------------------------------------------------------------------- |
+| ```dialStartAngle``` | The angle in degrees to start the dial (```135```)       |
+| ```dialEndAngle```   | The angle in degrees to end the dial. This MUST be less than dialStartAngle (```45```)  |
+| ```radius```         | The radius of the gauge (```400```) |
+| ```max```            | The maximum value for the gauge (```100```)  |
+| ```showValue```      | Whether to show the value at the center of the gauge (```true```) |
 
 
 
