@@ -5,9 +5,11 @@ Minmalistic, configurable, animated SVG gauge. Zero dependencies
 ### Usage
 -
 
+HTML
 ```html
 <div id="cpuSpeed" class="gauge-container"></div>
 ```
+CSS
 ```css
 .gauge-container {
   width: 150px;
@@ -32,7 +34,7 @@ Minmalistic, configurable, animated SVG gauge. Zero dependencies
   font-size: 10em;
 }
 ```
-
+Javascript
 ```js
 // Require JS
 var Gauge = require("svg-guage");
@@ -55,6 +57,16 @@ cpuGauge.gauge1.setValueAnimated(90, 1);
 
 ```
 
+#### Options
+-
+|      Name        |                  Description                       |
+| -----------------|----------------------------------------------------|
+| dialStartAngle   | The angle in degrees to start the dial (135)       |
+| -----------------|----------------------------------------------------|
+| dialEndAngle     | The angle in degrees to end the dial.              |
+|                  | This MUST be less than dialStartAngle (default45)  |
+| -----------------|----------------------------------------------------|
 
 
-Check out the live demo on http://codepen.io/naikus/pen/BzkoLL
+
+#### [Live Demo](http://codepen.io/naikus/pen/BzkoLL)
