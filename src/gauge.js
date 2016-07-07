@@ -127,7 +127,7 @@
       var rad = angle * Math.PI / 180;
       return {
         x: Math.round((cx + radius * Math.cos(rad)) * 1000) / 1000,
-        y: Math.floor((cy + radius * Math.sin(rad)) * 1000) / 1000
+        y: Math.round((cy + radius * Math.sin(rad)) * 1000) / 1000
       };
     }
 
