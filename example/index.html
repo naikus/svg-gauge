@@ -40,6 +40,10 @@
         padding: 0;
         margin: 0;
       }
+      
+      #gauge1 .value-text {
+        font-size: 6em;
+      }
 
       @media only screen and (min-device-width: 600px) {
         .example > .code {
@@ -81,7 +85,10 @@
                 max: 100,
                 dialStartAngle: -90,
                 dialEndAngle: -90.001, 
-                value: 100
+                value: 100,
+                label: function(value) {
+                  return Math.round(value) + "/" + this.max;
+                }
               }
             );</code>
         </pre>
@@ -235,7 +242,10 @@
           max: 100,
           dialStartAngle: -90,
           dialEndAngle: -90.001, 
-          value: 100
+          value: 100,
+          label: function(value) {
+            return Math.round(value) + "/" + this.max;
+          }
         }
       );
 

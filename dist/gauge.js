@@ -142,6 +142,10 @@
       	start: getCartesian(cx, cy, radius, startAngle)
       };
     }
+    
+    function defaultLabelRenderer(theValue) {
+      return Math.round(theValue);
+    }
 
     /**
      * Creates a Gauge object. This should be called without the 'new' operator. Various options
@@ -152,6 +156,7 @@
      *    radius: The gauge's radius. Default 400
      *    max: The maximum value of the gauge. Default 100
      *    value: The starting value of the gauge. Default 0
+     *    label: The function on how to render the center label (Should return a value)
      * }
      * @param {Element} elem The DOM into which to render the gauge
      * @param {Object} opts The gauge options
@@ -163,6 +168,7 @@
           value = normalize(opts.value || 0, limit),
           radius = opts.radius || 400,
           displayValue = opts.showValue === false ? false : true,
+          valueLabelRender = typeof opts.label === "function" ? opts.label : defaultLabelRenderer,
           startAngle = typeof(opts.dialStartAngle) === "undefined" ? 135 : opts.dialStartAngle,
           endAngle = typeof(opts.dialEndAngle) === "undefined" ? 45 : opts.dialEndAngle,
           gaugeTextElem,
@@ -226,7 +232,7 @@
             angle = getAngle(val, 360 - Math.abs(startAngle - endAngle)),
             // this is because we are using arc greater than 180deg
             flag = angle <= 180 ? 0 : 1;
-        (displayValue && (gaugeTextElem.textContent = Math.round(theValue)));
+        (displayValue && (gaugeTextElem.textContent = valueLabelRender.call(opts, theValue)));
         gaugeValuePath.setAttribute("d", pathString(radius, startAngle, angle + startAngle, flag));
       }
 
