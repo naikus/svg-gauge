@@ -52,7 +52,7 @@ var cpuGauge = Gauge(document.getElementById("cpuSpeed"), {
 cpuGauge.setValue(75);
 
 // Set value and animate (value, animation duration in seconds)
-cpuGauge.gauge1.setValueAnimated(90, 1);
+cpuGauge.setValueAnimated(90, 1);
 
 ```
 
