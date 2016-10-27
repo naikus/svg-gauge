@@ -35,6 +35,9 @@ CSS
 ```
 Javascript
 ```js
+// npm install
+npm install svg-gauge
+
 // Require JS
 var Gauge = require("svg-guage");
 
