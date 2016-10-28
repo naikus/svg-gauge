@@ -65,7 +65,7 @@
   }
   .gauge-container.three > .gauge > .value-text {
     fill: #C9DE3C;
-  } 
+  }
 
 
   /* ------------------- Alternate Style 2 ------------------------- */
@@ -117,4 +117,20 @@
   .gauge-container.six > .gauge > .value-text {
     fill: #FF6DAF;
     font-size: 7em;
-  } 
+  }
+
+  .gauge-container.seven > .gauge > .dial {
+    stroke: #334455;
+    fill: "#334455";
+    stroke-dasharray: 110 10;
+    stroke-width: 50;
+  }
+  .gauge-container.seven > .gauge > .value {
+    stroke: #FEFDD9;
+    stroke-dasharray: 110 10;
+    stroke-width: 52;
+  }
+  .gauge-container.seven > .gauge > .value-text {
+    fill: #FEFDD9;
+    font-size: 7em;
+  }

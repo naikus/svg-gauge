@@ -59,6 +59,7 @@
           float: right;
           padding: 10px;
         }
+      }
 
     </style>
 
@@ -232,8 +233,32 @@
       </div>
     </div>
 
+    <div class="example">
+        <div class="code">
+        <pre>
+          <code class="html">
+            &lt;div id="gauge7" class="gauge-container seven"&gt;&lt;/div&gt;
+          </code>
+          <code class="javascript">
+            var gauge7 = Gauge(
+              document.getElementById("gauge7"),
+              {
+                max: 100,
+                value: 50,
+                svgAttrVal: { 'stroke-linecap': 'round', 'stroke-linejoin': 'round' },
+                svgAttrDial: { 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+              }
+            );
+          </code>
+        </pre>
+        </div>
+        <div class="display">
+            <div id="gauge7" class="gauge-container seven"></div>
+        </div>
+    </div>
 
-    
+
+
 
     <script type="text/javascript" src="../src/gauge.js"> </script>
     <script>
@@ -300,6 +325,16 @@
         }
       );
 
+      var gauge7 = Gauge(
+              document.getElementById("gauge7"),
+              {
+                  max: 100,
+                  value: 50,
+                  svgAttrVal: { 'stroke-linecap': 'round', 'stroke-linejoin': 'round' },
+                  svgAttrDial: { 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }
+              }
+      );
+
       (function loop() {
         var value1 = Math.round(Math.random() * 100),
             value2 = Math.round(Math.random() * 100),
@@ -313,6 +348,7 @@
         gauge4.setValueAnimated(value4, 2);
         gauge5.setValueAnimated(value5, 1);
         gauge6.setValueAnimated(value1, 1);
+        gauge7.setValueAnimated(value1, 1);
         window.setTimeout(loop, 2500);
       })();
     </script>

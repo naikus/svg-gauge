@@ -157,6 +157,8 @@
      *    max: The maximum value of the gauge. Default 100
      *    value: The starting value of the gauge. Default 0
      *    label: The function on how to render the center label (Should return a value)
+     *    svgAttrVal: Attributes for the svg value path
+     *    svgAttrDial: Attributes for the svg dial path
      * }
      * @param {Element} elem The DOM into which to render the gauge
      * @param {Object} opts The gauge options
@@ -171,6 +173,8 @@
           valueLabelRender = typeof (opts.label) === "function" ? opts.label : defaultLabelRenderer,
           startAngle = typeof (opts.dialStartAngle) === "undefined" ? 135 : opts.dialStartAngle,
           endAngle = typeof (opts.dialEndAngle) === "undefined" ? 45 : opts.dialEndAngle,
+          svgAttrVal = opts.svgAttrVal,
+          svgAttrDial = opts.svgAttrDial,
           gaugeTextElem,
           gaugeValuePath,
           instance;
@@ -200,28 +204,48 @@
           "stroke": "#666",
           "text-anchor": "middle"
         });
-        gaugeValuePath = svg("path", {
+
+        var svgValProps = {
           "class": "value",
           "fill": "transparent",
           "stroke": "#666",
           "stroke-width": 20,
           "d": pathString(radius, startAngle, startAngle) // value of 0
-        });
+        };
+
+        for (var svgAttrValKey in svgAttrVal) {
+          if (svgAttrVal.hasOwnProperty(svgAttrValKey)) {
+            svgValProps[svgAttrValKey] = svgAttrVal[svgAttrValKey];
+          }
+        }
+
+        gaugeValuePath = svg("path", svgValProps);
 
         var angle = getAngle(100, 360 - Math.abs(startAngle - endAngle));
         var flag = angle <= 180 ? 0 : 1;
-        var gaugeElement = svg("svg", {"viewBox": "0 0 1000 1000", "class": "gauge"}, 
-          [
-            svg("path", {
-              "class": "dial",
-              "fill": "transparent",
-              "stroke": "#eee",
-              "stroke-width": 20,
-              "d": pathString(radius, startAngle, endAngle, flag)
-            }),
-            gaugeTextElem,
-            gaugeValuePath
-          ]
+
+        var svgDialProps = {
+          "class": "dial",
+          "fill": "transparent",
+          "stroke": "#eee",
+          "stroke-width": 20,
+          "d": pathString(radius, startAngle, endAngle, flag)
+        };
+
+        for (var svgAttrDialKey in svgAttrDial) {
+          if (svgAttrDial.hasOwnProperty(svgAttrDialKey)) {
+            svgDialProps[svgAttrDialKey] = svgAttrDial[svgAttrDialKey];
+          }
+        }
+
+        var gaugeDialPath = svg("path", svgDialProps);
+
+        var gaugeElement = svg("svg", { "viewBox": "0 0 1000 1000", "class": "gauge" },
+            [
+              gaugeDialPath,
+              gaugeTextElem,
+              gaugeValuePath
+            ]
         );
         elem.appendChild(gaugeElement);
       }

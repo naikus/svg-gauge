@@ -72,7 +72,8 @@ cpuGauge.setValueAnimated(90, 1);
 | ```max```            | The maximum value for the gauge (```100```)  |
 | ```label```          | Optional function that returns a string label that will be rendered in the center. This function will be passed the current value |
 | ```showValue```      | Whether to show the value at the center of the gauge (```true```) |
-
+| ```svgAttrVal```     | Attributes for the svg value path |
+| ```svgAttrDial```    | Attributes for the svg dial path |
 
 
 
