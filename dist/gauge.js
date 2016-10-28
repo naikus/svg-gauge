@@ -39,7 +39,7 @@
         currentIteration = 1,
         iterations = 60 * duration,
         start = options.start || 0,
-        end = options.end || 100,
+        end = options.end,
         change = end - start,
         step = options.step,
         easing = options.easing || function easeInOutCubic(pos) {
@@ -168,9 +168,9 @@
           value = normalize(opts.value || 0, limit),
           radius = opts.radius || 400,
           displayValue = opts.showValue === false ? false : true,
-          valueLabelRender = typeof opts.label === "function" ? opts.label : defaultLabelRenderer,
-          startAngle = typeof(opts.dialStartAngle) === "undefined" ? 135 : opts.dialStartAngle,
-          endAngle = typeof(opts.dialEndAngle) === "undefined" ? 45 : opts.dialEndAngle,
+          valueLabelRender = typeof (opts.label) === "function" ? opts.label : defaultLabelRenderer,
+          startAngle = typeof (opts.dialStartAngle) === "undefined" ? 135 : opts.dialStartAngle,
+          endAngle = typeof (opts.dialEndAngle) === "undefined" ? 45 : opts.dialEndAngle,
           gaugeTextElem,
           gaugeValuePath,
           instance;
@@ -241,12 +241,15 @@
           limit = max;
         },
         setValue: function(val) {
-          value = normalize(val);
+          value = normalize(val, limit);
           updateGauge(value);
         },
         setValueAnimated: function(val, duration) {
         	var oldVal = value;
-          value = normalize(val);
+          value = normalize(val, limit);
+          if(oldVal === value) {
+            return;
+          }
           Animation({
             start: oldVal || 0,
             end: value,

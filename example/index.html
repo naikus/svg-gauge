@@ -31,9 +31,9 @@
         text-align: center;
         overflow: auto;
         padding: 20px 0;
+        overflow: hidden;
       }
       .example > .display {
-        padding-left: 20%;
       }
 
       pre {
@@ -45,12 +45,12 @@
         font-size: 6em;
       }
 
-      @media only screen and (min-device-width: 600px) {
+      @media only screen and (min-device-width: 768px) {
         .example > .code {
-          width: 70%;
+          width: 65%;
         }
         .example > .display {
-          width: 30%;
+          width: 35%;
         }
         .example > .code {
           float: left;
@@ -77,20 +77,21 @@
     <div class="example">
       <div class="code">
         <pre>
-          <code class="html">&lt;div id="gauge1" class="gauge-container"&gt;&lt;/div&gt;</code>
-          <code class="javascript">
-            var gauge1 = Gauge(
-              document.getElementById("gauge1"), 
-              {
-                max: 100,
-                dialStartAngle: -90,
-                dialEndAngle: -90.001, 
-                value: 100,
-                label: function(value) {
-                  return Math.round(value) + "/" + this.max;
-                }
-              }
-            );</code>
+<code class="html">&lt;div id="gauge1" class="gauge-container"&gt;&lt;/div&gt;</code>
+<code class="javascript">
+  var gauge1 = Gauge(
+    document.getElementById("gauge1"), 
+    {
+      max: 100,
+      dialStartAngle: -90,
+      dialEndAngle: -90.001, 
+      value: 100,
+      label: function(value) {
+        return Math.round(value) + "/" + this.max;
+      }
+    }
+  );
+</code>
         </pre>
       </div>
       <div class="display">
@@ -103,20 +104,20 @@
     <div class="example">
       <div class="code">
         <pre>
-          <code class="html">
-            &lt;div id="gauge2" class="gauge-container two"&gt;&lt;/div&gt;      
-          </code>
-          <code class="javascript">
-            var gauge2 = Gauge(
-              document.getElementById("gauge2"), 
-              {
-                max: 100,
-                dialStartAngle: 180,
-                dialEndAngle: 0, 
-                value: 50
-              }
-            );
-          </code>
+<code class="html">
+  &lt;div id="gauge2" class="gauge-container two"&gt;&lt;/div&gt;      
+</code>
+<code class="javascript">
+  var gauge2 = Gauge(
+    document.getElementById("gauge2"), 
+    {
+      max: 100,
+      dialStartAngle: 180,
+      dialEndAngle: 0, 
+      value: 50
+    }
+  );
+</code>
         </pre>
       </div>
       <div class="display">
@@ -130,71 +131,71 @@
     <div class="example">
       <div class="code">
         <pre>
-          <code class="html">
-            &lt;div id="gauge3" class="gauge-container three"&gt;&lt;/div&gt;      
-          </code>
-          <code class="javascript">
-            var gauge3 = Gauge(
-              document.getElementById("gauge3"), 
-              {
-                max: 100, 
-                value: 50
-              }
-            );
-          </code>
-        </pre>
-      </div>
-      <div class="display">
-        <div id="gauge3" class="gauge-container three"></div>
-      </div>
-    </div>
+<code class="html">
+  &lt;div id="gauge3" class="gauge-container three"&gt;&lt;/div&gt;      
+</code>
+<code class="javascript">
+  var gauge3 = Gauge(
+    document.getElementById("gauge3"), 
+    {
+      max: 100, 
+      value: 50
+    }
+  );
+</code>
+</pre>
+</div>
+<div class="display">
+<div id="gauge3" class="gauge-container three"></div>
+</div>
+</div>
 
 
 
-    <div class="example">
-      <div class="code">
-        <pre>
-          <code class="html">
-            &lt;div id="gauge4" class="gauge-container four"&gt;&lt;/div&gt;      
-          </code>
-          <code class="javascript">
-            var gauge4 = Gauge(
-              document.getElementById("gauge4"), 
-              {
-                max: 100,
-                dialStartAngle: 180,
-                dialEndAngle: -90, 
-                value: 50
-              }
-            );
-          </code>
-        </pre>
-      </div>
-      <div class="display">
-        <div id="gauge4" class="gauge-container four"></div>
-      </div>
-    </div>
+<div class="example">
+<div class="code">
+<pre>
+<code class="html">
+  &lt;div id="gauge4" class="gauge-container four"&gt;&lt;/div&gt;      
+</code>
+<code class="javascript">
+  var gauge4 = Gauge(
+    document.getElementById("gauge4"), 
+    {
+      max: 100,
+      dialStartAngle: 180,
+      dialEndAngle: -90, 
+      value: 50
+    }
+  );
+</code>
+</pre>
+</div>
+<div class="display">
+<div id="gauge4" class="gauge-container four"></div>
+</div>
+</div>
 
 
 
 
-    <div class="example">
-      <div class="code">
-        <pre>
-          <code class="html">
-            &lt;div id="gauge5" class="gauge-container five"&gt;&lt;/div&gt;      
-          </code>
-          <code class="javascript">
-            var gauge5 = Gauge(
-              document.getElementById("gauge5"), 
-              {
-                max: 200,
-                dialStartAngle: 0,
-                dialEndAngle: -180, 
-                value: 50
-              }
-            );
-          </code>
+<div class="example">
+<div class="code">
+<pre>
+<code class="html">
+  &lt;div id="gauge5" class="gauge-container five"&gt;&lt;/div&gt;      
+</code>
+<code class="javascript">
+  var gauge5 = Gauge(
+    document.getElementById("gauge5"), 
+    {
+      max: 200,
+      dialStartAngle: 0,
+      dialEndAngle: -180, 
+      value: 50
+    }
+  );
+</code>
         </pre>
       </div>
       <div class="display">
@@ -208,22 +209,22 @@
     <div class="example">
       <div class="code">
         <pre>
-          <code class="html">
-            &lt;div id="gauge6" class="gauge-container six"&gt;&lt;/div&gt;      
-          </code>
-          <code class="javascript">
-            var gauge6 = Gauge(
-              document.getElementById("gauge6"), 
-              {
-                max: 100,
-                dialStartAngle: 90.01,
-                dialEndAngle: 89.99,
-                radius: 150,
-                displayValue: false, 
-                value: 50,
-              }
-            );
-          </code>
+<code class="html">
+  &lt;div id="gauge6" class="gauge-container six"&gt;&lt;/div&gt;      
+</code>
+<code class="javascript">
+  var gauge6 = Gauge(
+    document.getElementById("gauge6"), 
+    {
+      max: 100,
+      dialStartAngle: 90.01,
+      dialEndAngle: 89.99,
+      radius: 150,
+      displayValue: false, 
+      value: 50,
+    }
+  );
+</code>
         </pre>
       </div>
       <div class="display">

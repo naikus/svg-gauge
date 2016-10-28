@@ -12,6 +12,7 @@
     display: block;
     float: left;
     padding: 10px;
+    overflow: hidden;
   }
   .gauge-container > .gauge > .dial {
     stroke: #334455;

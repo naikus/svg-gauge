@@ -46,8 +46,11 @@ var Gauge = window.Gauge;
 
 // Create a new Gauge
 var cpuGauge = Gauge(document.getElementById("cpuSpeed"), {
-    min: 0
     max: 100,
+    // custom label renderer
+    label: function(value) {
+      return Math.round(value) + "/" + this.max;
+    },
     value: 50,
 });
 
@@ -67,6 +70,7 @@ cpuGauge.setValueAnimated(90, 1);
 | ```dialEndAngle```   | The angle in degrees to end the dial. This MUST be less than dialStartAngle (```45```)  |
 | ```radius```         | The radius of the gauge (```400```) |
 | ```max```            | The maximum value for the gauge (```100```)  |
+| ```label```          | Optional function that returns a string label that will be rendered in the center. This function will be passed the current value |
 | ```showValue```      | Whether to show the value at the center of the gauge (```true```) |
 
 
