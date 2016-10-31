@@ -72,6 +72,9 @@ cpuGauge.setValueAnimated(90, 1);
 | ```max```            | The maximum value for the gauge (```100```)  |
 | ```label```          | Optional function that returns a string label that will be rendered in the center. This function will be passed the current value |
 | ```showValue```      | Whether to show the value at the center of the gauge (```true```) |
+| ```dialClass```      | The dail class of the gauge (```dial```) |
+| ```valueClass```     | The value class of the gauge (```value```) |
+| ```valueTextClass``` | The value text class of the gauge (```value-text```) |
 
 
 

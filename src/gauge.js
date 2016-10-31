@@ -171,6 +171,9 @@
           valueLabelRender = typeof (opts.label) === "function" ? opts.label : defaultLabelRenderer,
           startAngle = typeof (opts.dialStartAngle) === "undefined" ? 135 : opts.dialStartAngle,
           endAngle = typeof (opts.dialEndAngle) === "undefined" ? 45 : opts.dialEndAngle,
+          valueClass = typeof (opts.valueClass) === "undefined" ? 'value' : opts.valueClass,
+          valueTextClass = typeof (opts.valueTextClass) === "undefined" ? 'value-text' : opts.valueTextClass,
+          dialClass = typeof (opts.dialClass) === "undefined" ? 'dial' : opts.dialClass,
           gaugeTextElem,
           gaugeValuePath,
           instance;
@@ -193,7 +196,7 @@
 
       function initializeGauge(elem) {
         gaugeTextElem = svg("text", {
-          "class": "value-text",
+          "class": valueTextClass,
           "x": 500,
           "y": 550,
           "font-size": "300%",
@@ -201,7 +204,7 @@
           "text-anchor": "middle"
         });
         gaugeValuePath = svg("path", {
-          "class": "value",
+          "class": valueClass,
           "fill": "transparent",
           "stroke": "#666",
           "stroke-width": 20,
@@ -213,7 +216,7 @@
         var gaugeElement = svg("svg", {"viewBox": "0 0 1000 1000", "class": "gauge"}, 
           [
             svg("path", {
-              "class": "dial",
+              "class": dialClass,
               "fill": "transparent",
               "stroke": "#eee",
               "stroke-width": 20,
