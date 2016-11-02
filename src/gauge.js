@@ -174,6 +174,7 @@
           valueClass = typeof (opts.valueClass) === "undefined" ? 'value' : opts.valueClass,
           valueTextClass = typeof (opts.valueTextClass) === "undefined" ? 'value-text' : opts.valueTextClass,
           dialClass = typeof (opts.dialClass) === "undefined" ? 'dial' : opts.dialClass,
+          gaugeClass = typeof (opts.gaugeClass) === "undefined" ? 'gauge' : opts.gaugeClass,
           gaugeTextElem,
           gaugeValuePath,
           instance;
@@ -213,7 +214,7 @@
 
         var angle = getAngle(100, 360 - Math.abs(startAngle - endAngle));
         var flag = angle <= 180 ? 0 : 1;
-        var gaugeElement = svg("svg", {"viewBox": "0 0 1000 1000", "class": "gauge"}, 
+        var gaugeElement = svg("svg", {"viewBox": "0 0 1000 1000", "class": gaugeClass},
           [
             svg("path", {
               "class": dialClass,
