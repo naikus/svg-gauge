@@ -1,6 +1,6 @@
 {
   "name": "svg-gauge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Minimal SVG animated gauge with zero dependencies",
   "main": "index.js",
   "directories": {
