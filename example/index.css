@@ -5,7 +5,7 @@
   }
 
   /* ------------------- Default Style ------------------------- */
-  
+
   .gauge-container {
     width: 200px;
     height: 200px;
@@ -14,17 +14,17 @@
     padding: 10px;
     overflow: hidden;
   }
-  .gauge-container > .gauge > .dial {
+  .gauge-container.one > .gauge > .dial {
     stroke: #334455;
     stroke-width: 20;
     fill: rgba(0,0,0,0);
   }
-  .gauge-container > .gauge > .value {
+  .gauge-container.one > .gauge > .value {
     stroke: rgb(47, 227, 255);
     stroke-width: 20;
     fill: rgba(0,0,0,0);
   }
-  .gauge-container > .gauge > .value-text {
+  .gauge-container.one > .gauge > .value-text {
     fill: rgb(47, 227, 255);
     font-family: sans, 'sans-serif';
     font-weight: bold;
@@ -65,7 +65,7 @@
   }
   .gauge-container.three > .gauge > .value-text {
     fill: #C9DE3C;
-  } 
+  }
 
 
   /* ------------------- Alternate Style 2 ------------------------- */
@@ -82,7 +82,7 @@
   }
   .gauge-container.four > .gauge > .value-text {
     fill: #BE80FF;
-  } 
+  }
 
 
 
@@ -117,4 +117,4 @@
   .gauge-container.six > .gauge > .value-text {
     fill: #FF6DAF;
     font-size: 7em;
-  } 
+  }

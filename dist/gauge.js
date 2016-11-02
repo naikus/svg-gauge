@@ -8,7 +8,7 @@
     // CommonJS support
     module.exports = Gauge;
   }else {
-    // We are probably running in the browser    
+    // We are probably running in the browser
     global.Gauge = Gauge;
   }
 })(typeof window === "undefined" ? this : window, function(global, undefined) {
@@ -31,7 +31,7 @@
    *  start: 0,       // The start value
    *  end: 100,       // The end value
    *  step: function, // REQUIRED! The step function that will be passed the value and does something
-   *  easing: function // The easing function. Default is easeInOutCubic  
+   *  easing: function // The easing function. Default is easeInOutCubic
    * }
    */
   function Animation(options) {
@@ -118,7 +118,7 @@
     /**
      * Gets cartesian co-ordinates for a specified radius and angle (in degrees)
      * @param cx {Number} The center x co-oriinate
-     * @param cy {Number} The center y co-ordinate 
+     * @param cy {Number} The center y co-ordinate
      * @param radius {Number} The radius of the circle
      * @param angle {Number} The angle in degrees
      * @return An object with x,y co-ordinates
@@ -135,14 +135,14 @@
     // i.e. starts at 135deg ends at 45deg with large arc flag
     // REMEMBER!! angle=0 starts on X axis and then increases clockwise
     function getDialCoords(radius, startAngle, endAngle) {
-      var cx = GaugeDefaults.centerX, 
+      var cx = GaugeDefaults.centerX,
           cy = GaugeDefaults.centerY;
       return {
         end: getCartesian(cx, cy, radius, endAngle),
       	start: getCartesian(cx, cy, radius, startAngle)
       };
     }
-    
+
     function defaultLabelRenderer(theValue) {
       return Math.round(theValue);
     }
@@ -163,6 +163,7 @@
      * @return a Gauge object
      */
     return function Gauge(elem, opts) {
+      opts = opts || {};
       var gaugeContainer = elem,
           limit = opts.max || 100,
           value = normalize(opts.value || 0, limit),
@@ -187,7 +188,7 @@
             start = coords.start,
             end = coords.end,
             largeArcFlag = typeof(largeArc) === "undefined" ? 1 : largeArc;
-            
+
         return ["M", start.x, start.y, "A", radius, radius, "0", largeArcFlag, "1", end.x, end.y].join(" ");
       }
 
@@ -196,21 +197,22 @@
           "class": "value-text",
           "x": 500,
           "y": 550,
-          "font-size": "300%",
-          "stroke": "#666",
+          "font-size": "700%",
+          "font-family": "sans-serif",
+          "font-weight": "bold",
           "text-anchor": "middle"
         });
         gaugeValuePath = svg("path", {
           "class": "value",
           "fill": "transparent",
           "stroke": "#666",
-          "stroke-width": 20,
+          "stroke-width": 25,
           "d": pathString(radius, startAngle, startAngle) // value of 0
         });
 
         var angle = getAngle(100, 360 - Math.abs(startAngle - endAngle));
         var flag = angle <= 180 ? 0 : 1;
-        var gaugeElement = svg("svg", {"viewBox": "0 0 1000 1000", "class": "gauge"}, 
+        var gaugeElement = svg("svg", {"viewBox": "0 0 1000 1000", "class": "gauge"},
           [
             svg("path", {
               "class": "dial",
