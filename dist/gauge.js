@@ -79,8 +79,8 @@
       dialEndAngle: 45,
       value: 0,
       max: 100,
-      valueDialClass: "value-dial",
-      valueClass: "value",
+      valueDialClass: "value",
+      valueClass: "value-text",
       dialClass: "dial",
       gaugeClass: "gauge",
       showValue: true,
@@ -299,7 +299,7 @@
             return;
           }
           if(dialColor) {
-            var transitionValue = "stroke " + (duration * 1 * 1000) + "ms ease";
+            var transitionValue = "stroke " + (duration * 1000) + "ms ease";
             gaugeValuePath.style = [
               "stroke: " + dialColor(value),
               "-webkit-transition: " + transitionValue,

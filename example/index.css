@@ -20,13 +20,13 @@
     fill: rgba(0,0,0,0);
   }
   
-  .gauge-container.one > .gauge > .value-dial {
+  .gauge-container.one > .gauge > .value {
     stroke: rgb(47, 227, 255);
     stroke-width: 20;
     fill: rgba(0,0,0,0);
   }
   
-  .gauge-container.one > .gauge > .value {
+  .gauge-container.one > .gauge > .value-text {
     fill: rgb(47, 227, 255);
     font-family: sans, 'sans-serif';
     font-weight: bold;
@@ -45,7 +45,7 @@
     stroke: #334455;
     stroke-width: 100;
   }
-  .gauge-container.two > .gauge > .value-dial {
+  .gauge-container.two > .gauge > .value {
     /*stroke: orange;*/
     stroke-dasharray: none;
     stroke-width: 130;
@@ -64,12 +64,12 @@
     stroke-width: 20;
     /*stroke-dasharray: 125, 20;*/
   }
-  .gauge-container.three > .gauge > .value-dial {
+  .gauge-container.three > .gauge > .value {
     stroke: #C9DE3C;
     stroke-width: 50;
     /*stroke-dasharray: 125, 20;*/
   }
-  .gauge-container.three > .gauge > .value {
+  .gauge-container.three > .gauge > .value-text {
     fill: #C9DE3C;
   }
 
@@ -81,7 +81,7 @@
     fill: "#334455";
     stroke-width: 50;
   }
-  .gauge-container.four > .gauge > .value-dial {
+  .gauge-container.four > .gauge > .value {
     stroke: #BE80FF;
     stroke-dasharray: none;
     stroke-width: 50;
@@ -97,12 +97,12 @@
     fill: "#334455";
     stroke-width: 50;
   }
-  .gauge-container.five > .gauge > .value-dial {
+  .gauge-container.five > .gauge > .value {
     stroke: #F8774B;
     stroke-dasharray: none;
     stroke-width: 50;
   }
-  .gauge-container.five > .gauge > .value {
+  .gauge-container.five > .gauge > .value-text {
     fill: #F8774B;
     font-size: 7em;
   }
@@ -115,12 +115,12 @@
     stroke-dasharray: 110 10;
     stroke-width: 50;
   }
-  .gauge-container.six > .gauge > .value-dial {
+  .gauge-container.six > .gauge > .value {
     stroke: #FF6DAF;
     stroke-dasharray: 110 10;
     stroke-width: 52;
   }
-  .gauge-container.six > .gauge > .value {
+  .gauge-container.six > .gauge > .value-text {
     fill: #FF6DAF;
     font-size: 7em;
   }
