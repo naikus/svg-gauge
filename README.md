@@ -52,6 +52,18 @@ var cpuGauge = Gauge(document.getElementById("cpuSpeed"), {
       return Math.round(value) + "/" + this.max;
     },
     value: 50,
+    // Custom dial colors (Optional)
+    dialColor: function(value) {
+      if(value < 20) {
+        return "#5ee432"; // green
+      }else if(value < 40) {
+        return "#fffa50"; // yellow
+      }else if(value < 60) {
+        return "#f7aa38"; // orange
+      }else {
+        return "#ef4655"; // red
+      }
+    }
 });
 
 // Set gauge value
@@ -76,6 +88,7 @@ cpuGauge.setValueAnimated(90, 1);
 | ```dialClass```      | The CSS class of the gauge's dial (```dial```) |
 | ```valueDialClass``` | The CSS class of the gauge's fill (value dial) (```value```) |
 | ```valueTextClass``` | The CSS class of the gauge's text (```value-text```) |
+| ```dialColor (new)``` | An optional function that can return a color for current value  ```function(value) {}``` |
 
 
 
