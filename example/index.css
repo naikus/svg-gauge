@@ -19,16 +19,22 @@
     stroke-width: 20;
     fill: rgba(0,0,0,0);
   }
-  .gauge-container.one > .gauge > .value {
+  
+  .gauge-container.one > .gauge > .value-dial {
     stroke: rgb(47, 227, 255);
     stroke-width: 20;
     fill: rgba(0,0,0,0);
   }
-  .gauge-container.one > .gauge > .value-text {
+  
+  .gauge-container.one > .gauge > .value {
     fill: rgb(47, 227, 255);
     font-family: sans, 'sans-serif';
     font-weight: bold;
-    font-size: 10em;
+    font-size: 3em;
+  }
+  .gauge-container.one > .gauge > .value-label {
+    font-size: 5em;
+
   }
 
   /* ------------------- Alternate Style ------------------------- */
@@ -39,13 +45,13 @@
     stroke: #334455;
     stroke-width: 100;
   }
-  .gauge-container.two > .gauge > .value {
-    stroke: orange;
+  .gauge-container.two > .gauge > .value-dial {
+    /*stroke: orange;*/
     stroke-dasharray: none;
     stroke-width: 130;
   }
-  .gauge-container.two > .gauge > .value-text {
-    fill: orange;
+  .gauge-container.two > .gauge > .value {
+    /*fill: orange;*/
   }
 
 
@@ -58,12 +64,12 @@
     stroke-width: 20;
     /*stroke-dasharray: 125, 20;*/
   }
-  .gauge-container.three > .gauge > .value {
+  .gauge-container.three > .gauge > .value-dial {
     stroke: #C9DE3C;
     stroke-width: 50;
     /*stroke-dasharray: 125, 20;*/
   }
-  .gauge-container.three > .gauge > .value-text {
+  .gauge-container.three > .gauge > .value {
     fill: #C9DE3C;
   }
 
@@ -75,12 +81,12 @@
     fill: "#334455";
     stroke-width: 50;
   }
-  .gauge-container.four > .gauge > .value {
+  .gauge-container.four > .gauge > .value-dial {
     stroke: #BE80FF;
     stroke-dasharray: none;
     stroke-width: 50;
   }
-  .gauge-container.four > .gauge > .value-text {
+  .gauge-container.four > .gauge > .value {
     fill: #BE80FF;
   }
 
@@ -91,12 +97,12 @@
     fill: "#334455";
     stroke-width: 50;
   }
-  .gauge-container.five > .gauge > .value {
+  .gauge-container.five > .gauge > .value-dial {
     stroke: #F8774B;
     stroke-dasharray: none;
     stroke-width: 50;
   }
-  .gauge-container.five > .gauge > .value-text {
+  .gauge-container.five > .gauge > .value {
     fill: #F8774B;
     font-size: 7em;
   }
@@ -109,12 +115,12 @@
     stroke-dasharray: 110 10;
     stroke-width: 50;
   }
-  .gauge-container.six > .gauge > .value {
+  .gauge-container.six > .gauge > .value-dial {
     stroke: #FF6DAF;
     stroke-dasharray: 110 10;
     stroke-width: 52;
   }
-  .gauge-container.six > .gauge > .value-text {
+  .gauge-container.six > .gauge > .value {
     fill: #FF6DAF;
     font-size: 7em;
   }

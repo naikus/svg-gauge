@@ -49,10 +49,12 @@
         };
 
     function animate() {
-      var progress = (currentIteration++) / iterations;
-      var value = change * easing(progress) + start;
+      var progress = currentIteration / iterations, 
+          value = change * easing(progress) + start;
       // console.log(progress + ", " + value);
-      step(value);
+      step(value, currentIteration);
+      currentIteration += 1;
+
       if(progress < 1) {
         requestAnimationFrame(animate);
       }
@@ -64,16 +66,38 @@
 
 
   var Gauge = (function() {
-
     var SVG_NS = "http://www.w3.org/2000/svg";
 
     var GaugeDefaults = {
+      centerX: 500,
+      centerY: 500
+    };
+
+    var defaultOptions = {
+      dialRadius: 400,
       dialStartAngle: 135,
       dialEndAngle: 45,
-      centerX: 500,
-      centerY: 500,
-      radius: 400
+      value: 0,
+      max: 100,
+      valueDialClass: "value-dial",
+      valueClass: "value",
+      dialClass: "dial",
+      gaugeClass: "gauge",
+      showValue: true,
+      dialColor: null
     };
+
+    function mergeOptions(opts) {
+      var options = {};
+      for(key in defaultOptions) {
+        if(opts.hasOwnProperty(key)) {
+          options[key] = opts[key];
+        }else {
+          options[key] = defaultOptions[key];
+        }
+      }
+      return options;
+    }
 
     /**
      * A utility function to create SVG dom tree
@@ -163,22 +187,35 @@
      * @return a Gauge object
      */
     return function Gauge(elem, opts) {
-      opts = opts || {};
+      opts = mergeOptions(opts || {});
       var gaugeContainer = elem,
-          limit = opts.max || 100,
-          value = normalize(opts.value || 0, limit),
-          radius = opts.radius || 400,
-          displayValue = opts.showValue === false ? false : true,
-          valueLabelRender = typeof (opts.label) === "function" ? opts.label : defaultLabelRenderer,
-          startAngle = typeof (opts.dialStartAngle) === "undefined" ? 135 : opts.dialStartAngle,
-          endAngle = typeof (opts.dialEndAngle) === "undefined" ? 45 : opts.dialEndAngle,
-          valueDialClass = typeof (opts.valueDialClass) === "undefined" ? 'value' : opts.valueDialClass,
-          valueTextClass = typeof (opts.valueTextClass) === "undefined" ? 'value-text' : opts.valueTextClass,
-          dialClass = typeof (opts.dialClass) === "undefined" ? 'dial' : opts.dialClass,
-          gaugeClass = typeof (opts.gaugeClass) === "undefined" ? 'gauge' : opts.gaugeClass,
-          gaugeTextElem,
+          limit = opts.max,
+          value = normalize(opts.value, limit),
+          radius = opts.dialRadius,
+          displayValue = opts.showValue,
+          startAngle = opts.dialStartAngle,
+          endAngle = opts.dialEndAngle,
+          valueDialClass = opts.valueDialClass,
+          valueTextClass = opts.valueClass,
+          valueLabelClass = opts.valueLabelClass,
+          dialClass = opts.dialClass,
+          gaugeClass = opts.gaugeClass,
+          dialColor = opts.dialColor,
+          gaugeValueElem,
           gaugeValuePath,
+          valueLabelRender,
+          label = opts.label,
           instance;
+
+      valueLabelRender = typeof label === "function" ? label : defaultLabelRenderer;
+      /*
+      if(typeof opts.label === "function") {
+        valueLabelRender = opts.label;
+      }else {
+        label = opts.label || ""
+        valueLabelRender = defaultLabelRenderer;
+      }
+      */
 
       if(startAngle < endAngle) {
         console.log("WARNING! Start angle should be greater than end angle. Swapping");
@@ -197,15 +234,17 @@
       }
 
       function initializeGauge(elem) {
-        gaugeTextElem = svg("text", {
-          "class": valueTextClass,
+        gaugeValueElem = svg("text", {
           "x": 500,
-          "y": 550,
+          "y": 500,
+          "fill": "#999",
+          "class": valueTextClass,
           "font-size": "700%",
           "font-family": "sans-serif",
-          "font-weight": "bold",
+          "font-weight": "normal",
           "text-anchor": "middle"
         });
+
         gaugeValuePath = svg("path", {
           "class": valueDialClass,
           "fill": "transparent",
@@ -225,20 +264,23 @@
               "stroke-width": 20,
               "d": pathString(radius, startAngle, endAngle, flag)
             }),
-            gaugeTextElem,
+            gaugeValueElem,
             gaugeValuePath
           ]
         );
         elem.appendChild(gaugeElement);
       }
 
-      function updateGauge(theValue) {
+      function updateGauge(theValue, frame) {
         var val = getValueInPercentage(theValue, limit),
             // angle = getAngle(val, 360 - Math.abs(endAngle - startAngle)),
             angle = getAngle(val, 360 - Math.abs(startAngle - endAngle)),
             // this is because we are using arc greater than 180deg
             flag = angle <= 180 ? 0 : 1;
-        (displayValue && (gaugeTextElem.textContent = valueLabelRender.call(opts, theValue)));
+        // (displayValue && (gaugeTextElem.textContent = valueLabelRender.call(opts, theValue, label)));
+        if(displayValue) {
+          gaugeValueElem.textContent = valueLabelRender.call(opts, theValue, label);
+        }
         gaugeValuePath.setAttribute("d", pathString(radius, startAngle, angle + startAngle, flag));
       }
 
@@ -256,12 +298,21 @@
           if(oldVal === value) {
             return;
           }
+          if(dialColor) {
+            var transitionValue = "stroke " + (duration * 1000) + "ms ease";
+            gaugeValuePath.style = [
+              "stroke: " + dialColor(value),
+              "-webkit-transition: " + transitionValue,
+              "-moz-transition: " + transitionValue,
+              "transition: " + transitionValue,
+            ].join(";");
+          }
           Animation({
             start: oldVal || 0,
             end: value,
             duration: duration || 1,
-            step: function(val) {
-              updateGauge(Math.round(val * 100) / 100);
+            step: function(val, frame) {
+              updateGauge(Math.round(val * 100) / 100, frame);
             }
           });
         },
