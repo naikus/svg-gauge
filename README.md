@@ -18,19 +18,19 @@ CSS
 }
 .gauge-container > .gauge > .dial {
   stroke: #eee;
-  stroke-width: 20;
+  stroke-width: 2;
   fill: rgba(0,0,0,0);
 }
 .gauge-container > .gauge > .value {
   stroke: rgb(47, 227, 255);
-  stroke-width: 20;
+  stroke-width: 2;
   fill: rgba(0,0,0,0);
 }
 .gauge-container > .gauge > .value-text {
   fill: rgb(47, 227, 255);
   font-family: sans-serif;
   font-weight: bold;
-  font-size: 10em;
+  font-size: 1em;
 }
 ```
 Javascript
@@ -88,9 +88,12 @@ cpuGauge.setValueAnimated(90, 1);
 | ```dialClass```      | The CSS class of the gauge's dial (```dial```) |
 | ```valueDialClass``` | The CSS class of the gauge's fill (value dial) (```value```) |
 | ```valueTextClass``` | The CSS class of the gauge's text (```value-text```) |
-| ```dialColor (new)``` | An optional function that can return a color for current value  ```function(value) {}``` |
+| ```color (new)```    | An optional function that can return a color for current value  ```function(value) {}``` |
 
 
+### Migration from 1.0.2
+
+The new gauge uses a viewbox of 100x100 as opposed to previous 1000x1000. All the stroke and font values have to be adjusted accordingly in your CSS. Just divide those by 10
 
 
 
