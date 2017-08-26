@@ -132,7 +132,7 @@
       dialStartAngle: 180,
       dialEndAngle: 0,
       value: 50,
-      dialColor: function(value) {
+      color: function(value) {
         if(value < 20) {
           return "#5ee432";
         }else if(value < 40) {
@@ -266,6 +266,8 @@
     <script type="text/javascript" src="../src/gauge.js"> </script>
     <script>
 
+      var pad = function(tar) {}
+
       var gauge0 = Gauge(document.getElementById("gauge0"));
 
       var gauge1 = Gauge(
@@ -276,7 +278,7 @@
           dialEndAngle: -90.001,
           value: 100,
           label: function(value) {
-            return Math.round(value) + "/" + this.max;
+            return (Math.round(value * 100) / 100) + "/" + this.max;
           }
         }
       );
@@ -288,7 +290,7 @@
           dialStartAngle: 180,
           dialEndAngle: 0,
           value: 50,
-          dialColor: function(value) {
+          color: function(value) {
             if(value < 20) {
               return "#5ee432";
             }else if(value < 40) {
@@ -336,22 +338,22 @@
           max: 100,
           dialStartAngle: 90.01,
           dialEndAngle: 89.99,
-          dialRadius: 150,
+          dialRadius: 15,
           showValue: false,
           value: 100
         }
       );
 
       (function loop() {
-        var value1 = Math.round(Math.random() * 100),
-            value2 = Math.round(Math.random() * 100),
-            value3 = Math.round(Math.random() * 100),
-            value4 = Math.round(Math.random() * 100),
-            value5 = Math.round(Math.random() * 200);
+        var value1 = Math.random() * 100,
+            value2 = Math.random(),
+            value3 = Math.random() * 100,
+            value4 = Math.random() * 100,
+            value5 = Math.random() * 200;
 
         gauge0.setValue(value1, 1);
         gauge1.setValueAnimated(value1, 1);
-        gauge2.setValueAnimated(value2, 3);
+        gauge2.setValueAnimated(value1, 3);
         gauge3.setValueAnimated(value3, 1.5);
         gauge4.setValueAnimated(value4, 2);
         gauge5.setValueAnimated(value5, 1);

@@ -14,6 +14,7 @@
 })(typeof window === "undefined" ? this : window, function(global, undefined) {
 
   var document = global.document,
+    slice = Array.prototype.slice,
     requestAnimationFrame = (global.requestAnimationFrame ||
         global.mozRequestAnimationFrame ||
         global.webkitRequestAnimationFrame ||
@@ -69,12 +70,12 @@
     var SVG_NS = "http://www.w3.org/2000/svg";
 
     var GaugeDefaults = {
-      centerX: 500,
-      centerY: 500
+      centerX: 50,
+      centerY: 50
     };
 
     var defaultOptions = {
-      dialRadius: 400,
+      dialRadius: 40,
       dialStartAngle: 135,
       dialEndAngle: 45,
       value: 0,
@@ -84,19 +85,20 @@
       dialClass: "dial",
       gaugeClass: "gauge",
       showValue: true,
-      dialColor: null
+      gaugeColor: null,
+      label: function(val) {return Math.round(val);}
     };
 
-    function mergeOptions(opts) {
-      var options = {};
-      for(key in defaultOptions) {
-        if(opts.hasOwnProperty(key)) {
-          options[key] = opts[key];
-        }else {
-          options[key] = defaultOptions[key];
+    function shallowCopy(/* source, ...targets*/) {
+      var target = arguments[0], sources = slice.call(arguments, 1);
+      sources.forEach(function(s) {
+        for(k in s) {
+          if(s.hasOwnProperty(k)) {
+            target[k] = s[k];
+          }
         }
-      }
-      return options;
+      });
+      return target;
     }
 
     /**
@@ -167,10 +169,6 @@
       };
     }
 
-    function defaultLabelRenderer(theValue) {
-      return Math.round(theValue);
-    }
-
     /**
      * Creates a Gauge object. This should be called without the 'new' operator. Various options
      * can be passed for the gauge:
@@ -187,7 +185,7 @@
      * @return a Gauge object
      */
     return function Gauge(elem, opts) {
-      opts = mergeOptions(opts || {});
+      opts = shallowCopy({}, defaultOptions, opts);
       var gaugeContainer = elem,
           limit = opts.max,
           value = normalize(opts.value, limit),
@@ -200,25 +198,14 @@
           valueLabelClass = opts.valueLabelClass,
           dialClass = opts.dialClass,
           gaugeClass = opts.gaugeClass,
-          dialColor = opts.dialColor,
+          gaugeColor = opts.color,
           gaugeValueElem,
           gaugeValuePath,
-          valueLabelRender,
           label = opts.label,
           instance;
 
-      valueLabelRender = typeof label === "function" ? label : defaultLabelRenderer;
-      /*
-      if(typeof opts.label === "function") {
-        valueLabelRender = opts.label;
-      }else {
-        label = opts.label || ""
-        valueLabelRender = defaultLabelRenderer;
-      }
-      */
-
       if(startAngle < endAngle) {
-        console.log("WARNING! Start angle should be greater than end angle. Swapping");
+        console.log("WARN! startAngle < endAngle, Swapping");
         var tmp = startAngle;
         startAngle = endAngle;
         endAngle = tmp;
@@ -230,16 +217,19 @@
             end = coords.end,
             largeArcFlag = typeof(largeArc) === "undefined" ? 1 : largeArc;
 
-        return ["M", start.x, start.y, "A", radius, radius, "0", largeArcFlag, "1", end.x, end.y].join(" ");
+        return [
+          "M", start.x, start.y, 
+          "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y
+        ].join(" ");
       }
 
       function initializeGauge(elem) {
         gaugeValueElem = svg("text", {
-          "x": 500,
-          "y": 500,
-          "fill": "#999",
+          x: 50,
+          y: 50,
+          fill: "#999",
           "class": valueTextClass,
-          "font-size": "700%",
+          "font-size": "100%",
           "font-family": "sans-serif",
           "font-weight": "normal",
           "text-anchor": "middle"
@@ -247,22 +237,22 @@
 
         gaugeValuePath = svg("path", {
           "class": valueDialClass,
-          "fill": "transparent",
-          "stroke": "#666",
-          "stroke-width": 25,
-          "d": pathString(radius, startAngle, startAngle) // value of 0
+          fill: "none",
+          stroke: "#666",
+          "stroke-width": 2.5,
+          d: pathString(radius, startAngle, startAngle) // value of 0
         });
 
         var angle = getAngle(100, 360 - Math.abs(startAngle - endAngle));
         var flag = angle <= 180 ? 0 : 1;
-        var gaugeElement = svg("svg", {"viewBox": "0 0 1000 1000", "class": gaugeClass},
+        var gaugeElement = svg("svg", {"viewBox": "0 0 100 100", "class": gaugeClass},
           [
             svg("path", {
               "class": dialClass,
-              "fill": "transparent",
-              "stroke": "#eee",
-              "stroke-width": 20,
-              "d": pathString(radius, startAngle, endAngle, flag)
+              fill: "none",
+              stroke: "#eee",
+              "stroke-width": 2,
+              d: pathString(radius, startAngle, endAngle, flag)
             }),
             gaugeValueElem,
             gaugeValuePath
@@ -277,9 +267,8 @@
             angle = getAngle(val, 360 - Math.abs(startAngle - endAngle)),
             // this is because we are using arc greater than 180deg
             flag = angle <= 180 ? 0 : 1;
-        // (displayValue && (gaugeTextElem.textContent = valueLabelRender.call(opts, theValue, label)));
         if(displayValue) {
-          gaugeValueElem.textContent = valueLabelRender.call(opts, theValue, label);
+          gaugeValueElem.textContent = label.call(opts, theValue);
         }
         gaugeValuePath.setAttribute("d", pathString(radius, startAngle, angle + startAngle, flag));
       }
@@ -298,21 +287,33 @@
           if(oldVal === value) {
             return;
           }
-          if(dialColor) {
-            var transitionValue = "stroke " + (duration * 1000) + "ms ease";
+          if(gaugeColor) {
+            var c = gaugeColor(value), 
+                dur = duration * 1000,
+                pathTransition = "stroke " + dur + "ms ease";
+                // textTransition = "fill " + dur + "ms ease";
+
             gaugeValuePath.style = [
-              "stroke: " + dialColor(value),
-              "-webkit-transition: " + transitionValue,
-              "-moz-transition: " + transitionValue,
-              "transition: " + transitionValue,
+              "stroke: " + c,
+              "-webkit-transition: " + pathTransition,
+              "-moz-transition: " + pathTransition,
+              "transition: " + pathTransition,
             ].join(";");
+            /*
+            gaugeValueElem.style = [
+              "fill: " + c,
+              "-webkit-transition: " + textTransition,
+              "-moz-transition: " + textTransition,
+              "transition: " + textTransition,
+            ].join(";");
+            */
           }
           Animation({
             start: oldVal || 0,
             end: value,
             duration: duration || 1,
             step: function(val, frame) {
-              updateGauge(Math.round(val * 100) / 100, frame);
+              updateGauge(val, frame);
             }
           });
         },
