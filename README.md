@@ -53,7 +53,7 @@ var cpuGauge = Gauge(document.getElementById("cpuSpeed"), {
     },
     value: 50,
     // Custom dial colors (Optional)
-    dialColor: function(value) {
+    color: function(value) {
       if(value < 20) {
         return "#5ee432"; // green
       }else if(value < 40) {
