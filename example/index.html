@@ -41,9 +41,7 @@
         margin: 0;
       }
 
-      #gauge1 .value-text {
-        font-size: 6em;
-      }
+
 
       @media only screen and (min-device-width: 768px) {
         .example > .code {
@@ -130,10 +128,22 @@
   var gauge2 = Gauge(
     document.getElementById("gauge2"),
     {
+      min: -100,
       max: 100,
       dialStartAngle: 180,
       dialEndAngle: 0,
-      value: 50
+      value: 50,
+      color: function(value) {
+        if(value < 20) {
+          return "#5ee432";
+        }else if(value < 40) {
+          return "#fffa50";
+        }else if(value < 60) {
+          return "#f7aa38";
+        }else {
+          return "#ef4655";
+        }
+      }
     }
   );
 </code>
@@ -238,8 +248,8 @@
       max: 100,
       dialStartAngle: 90.01,
       dialEndAngle: 89.99,
-      radius: 150,
-      displayValue: false,
+      dialRadius: 150,
+      showValue: false,
       value: 50,
     }
   );
@@ -257,6 +267,8 @@
     <script type="text/javascript" src="../src/gauge.js"> </script>
     <script>
 
+      var pad = function(tar) {}
+
       var gauge0 = Gauge(document.getElementById("gauge0"));
 
       var gauge1 = Gauge(
@@ -267,7 +279,7 @@
           dialEndAngle: -90.001,
           value: 100,
           label: function(value) {
-            return Math.round(value) + "/" + this.max;
+            return (Math.round(value * 100) / 100) + "/" + this.max;
           }
         }
       );
@@ -275,10 +287,22 @@
       var gauge2 = Gauge(
         document.getElementById("gauge2"),
 		    {
+          min: -100,
           max: 100,
           dialStartAngle: 180,
           dialEndAngle: 0,
-          value: 50
+          value: 50,
+          color: function(value) {
+            if(value < 20) {
+              return "#5ee432";
+            }else if(value < 40) {
+              return "#fffa50";
+            }else if(value < 60) {
+              return "#f7aa38";
+            }else {
+              return "#ef4655";
+            }
+          }
         }
       );
 
@@ -316,27 +340,27 @@
           max: 100,
           dialStartAngle: 90.01,
           dialEndAngle: 89.99,
-          radius: 150,
+          dialRadius: 15,
           showValue: false,
           value: 100
         }
       );
 
       (function loop() {
-        var value1 = Math.round(Math.random() * 100),
-            value2 = Math.round(Math.random() * 100),
-            value3 = Math.round(Math.random() * 100),
-            value4 = Math.round(Math.random() * 100),
-            value5 = Math.round(Math.random() * 200);
+        var value1 = Math.random() * 100,
+            value2 = Math.random(),
+            value3 = Math.random() * 100,
+            value4 = Math.random() * 100,
+            value5 = Math.random() * 200;
 
-        gauge0.setValueAnimated(value1, 1);
+        gauge0.setValue(value1, 1);
         gauge1.setValueAnimated(value1, 1);
-        gauge2.setValueAnimated(value2, 2);
+        gauge2.setValueAnimated(50 - value1, 3);
         gauge3.setValueAnimated(value3, 1.5);
         gauge4.setValueAnimated(value4, 2);
         gauge5.setValueAnimated(value5, 1);
         gauge6.setValueAnimated(value1, 1);
-        window.setTimeout(loop, 2500);
+        window.setTimeout(loop, 4000);
       })();
     </script>
   </body>
