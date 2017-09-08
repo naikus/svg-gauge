@@ -80,6 +80,7 @@
       dialEndAngle: 45,
       value: 0,
       max: 100,
+      min: 0,
       valueDialClass: "value",
       valueClass: "value-text",
       dialClass: "dial",
@@ -130,15 +131,17 @@
       return percentage * gaugeSpanAngle / 100;
     }
 
-    function normalize(value, limit) {
+    function normalize(value, min, limit) {
       var val = Number(value);
       if(val > limit) return limit;
-      if(val < 0) return 0;
+      if(val < min) return min;
       return val;
     }
 
-    function getValueInPercentage(value, limit) {
-      return 100 * value / limit;
+    function getValueInPercentage(value, min, max) {
+      // const newMax = max - min, newVal = Math.abs(min) + value;
+      // return 100 * newVal / newMax;
+      return 100 * (Math.abs(min) + value) / (max - min);
     }
 
     /**
@@ -188,7 +191,8 @@
       opts = shallowCopy({}, defaultOptions, opts);
       var gaugeContainer = elem,
           limit = opts.max,
-          value = normalize(opts.value, limit),
+          min = opts.min,
+          value = normalize(opts.value, min, limit),
           radius = opts.dialRadius,
           displayValue = opts.showValue,
           startAngle = opts.dialStartAngle,
@@ -262,7 +266,7 @@
       }
 
       function updateGauge(theValue, frame) {
-        var val = getValueInPercentage(theValue, limit),
+        var val = getValueInPercentage(theValue, min, limit),
             // angle = getAngle(val, 360 - Math.abs(endAngle - startAngle)),
             angle = getAngle(val, 360 - Math.abs(startAngle - endAngle)),
             // this is because we are using arc greater than 180deg
@@ -278,12 +282,12 @@
           limit = max;
         },
         setValue: function(val) {
-          value = normalize(val, limit);
+          value = normalize(val, min, limit);
           updateGauge(value);
         },
         setValueAnimated: function(val, duration) {
         	var oldVal = value;
-          value = normalize(val, limit);
+          value = normalize(val, min, limit);
           if(oldVal === value) {
             return;
           }

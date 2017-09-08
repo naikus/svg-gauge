@@ -128,6 +128,7 @@
   var gauge2 = Gauge(
     document.getElementById("gauge2"),
     {
+      min: -100,
       max: 100,
       dialStartAngle: 180,
       dialEndAngle: 0,
@@ -286,6 +287,7 @@
       var gauge2 = Gauge(
         document.getElementById("gauge2"),
 		    {
+          min: -100,
           max: 100,
           dialStartAngle: 180,
           dialEndAngle: 0,
@@ -353,7 +355,7 @@
 
         gauge0.setValue(value1, 1);
         gauge1.setValueAnimated(value1, 1);
-        gauge2.setValueAnimated(value1, 3);
+        gauge2.setValueAnimated(50 - value1, 3);
         gauge3.setValueAnimated(value3, 1.5);
         gauge4.setValueAnimated(value4, 2);
         gauge5.setValueAnimated(value5, 1);
