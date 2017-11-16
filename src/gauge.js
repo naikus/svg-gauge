@@ -139,9 +139,10 @@
     }
 
     function getValueInPercentage(value, min, max) {
-      // const newMax = max - min, newVal = Math.abs(min) + value;
-      // return 100 * newVal / newMax;
-      return 100 * (Math.abs(min) + value) / (max - min);
+      const newMax = max - min, newVal = value - min;
+      return 100 * newVal / newMax;
+      // var absMin = Math.abs(min);
+      // return 100 * (absMin + value) / (max + absMin);
     }
 
     /**
@@ -277,12 +278,37 @@
         gaugeValuePath.setAttribute("d", pathString(radius, startAngle, angle + startAngle, flag));
       }
 
+      function setGaugeColor(value, duration) {        
+        var c = gaugeColor(value), 
+            dur = duration * 1000,
+            pathTransition = "stroke " + dur + "ms ease";
+            // textTransition = "fill " + dur + "ms ease";
+
+        gaugeValuePath.style = [
+          "stroke: " + c,
+          "-webkit-transition: " + pathTransition,
+          "-moz-transition: " + pathTransition,
+          "transition: " + pathTransition,
+        ].join(";");
+        /*
+        gaugeValueElem.style = [
+          "fill: " + c,
+          "-webkit-transition: " + textTransition,
+          "-moz-transition: " + textTransition,
+          "transition: " + textTransition,
+        ].join(";");
+        */
+      }
+
       instance = {
         setMaxValue: function(max) {
           limit = max;
         },
         setValue: function(val) {
           value = normalize(val, min, limit);
+          if(gaugeColor) {
+            setGaugeColor(value, 0)
+          }
           updateGauge(value);
         },
         setValueAnimated: function(val, duration) {
@@ -291,26 +317,9 @@
           if(oldVal === value) {
             return;
           }
-          if(gaugeColor) {
-            var c = gaugeColor(value), 
-                dur = duration * 1000,
-                pathTransition = "stroke " + dur + "ms ease";
-                // textTransition = "fill " + dur + "ms ease";
 
-            gaugeValuePath.style = [
-              "stroke: " + c,
-              "-webkit-transition: " + pathTransition,
-              "-moz-transition: " + pathTransition,
-              "transition: " + pathTransition,
-            ].join(";");
-            /*
-            gaugeValueElem.style = [
-              "fill: " + c,
-              "-webkit-transition: " + textTransition,
-              "-moz-transition: " + textTransition,
-              "transition: " + textTransition,
-            ].join(";");
-            */
+          if(gaugeColor) {
+            setGaugeColor(value, duration);
           }
           Animation({
             start: oldVal || 0,
@@ -327,7 +336,7 @@
       };
 
       initializeGauge(gaugeContainer);
-      updateGauge(value);
+      instance.setValue(value);
       return instance;
     };
   })();

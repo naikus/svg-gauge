@@ -39,7 +39,7 @@ Javascript
 npm install svg-gauge
 
 // Require JS
-var Gauge = require("svg-guage");
+var Gauge = require("svg-gauge");
 
 // Standalone
 var Gauge = window.Gauge;
