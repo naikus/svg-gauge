@@ -2,6 +2,13 @@
 Minmalistic, configurable, animated SVG gauge. Zero dependencies
 
 
+
+
+## Migration from 1.0.2
+
+The new gauge uses a viewbox of 100x100 as opposed to previous 1000x1000. All the stroke and font values have to be adjusted accordingly in your CSS. Just divide those by 10
+
+
 ### Usage
 
 HTML
@@ -90,12 +97,6 @@ cpuGauge.setValueAnimated(90, 1);
 | ```valueDialClass``` | The CSS class of the gauge's fill (value dial) (```value```) |
 | ```valueTextClass``` | The CSS class of the gauge's text (```value-text```) |
 | ```color (new)```    | An optional function that can return a color for current value  ```function(value) {}``` |
-
-
-### Migration from 1.0.2
-
-The new gauge uses a viewbox of 100x100 as opposed to previous 1000x1000. All the stroke and font values have to be adjusted accordingly in your CSS. Just divide those by 10
-
 
 
 #### [Live Demo](http://codepen.io/naikus/pen/BzkoLL)
