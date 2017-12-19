@@ -124,7 +124,7 @@ const Component = CreateReactClass({
   },
 
   shouldComponentUpdate(nextProps, nextState) {
-    const props = {this};
+    const {props} = this;
     if(props.value !== nextProps.value) {
       this.renderGauge(nextProps);
     }
