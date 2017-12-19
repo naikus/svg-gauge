@@ -9,7 +9,11 @@ Minmalistic, configurable, animated SVG gauge. Zero dependencies
 The new gauge uses a viewbox of 100x100 as opposed to previous 1000x1000. All the stroke and font values have to be adjusted accordingly in your CSS. Just divide those by 10
 
 
-### Usage
+## Demo
+Check out the [live demo](http://codepen.io/naikus/pen/BzkoLL) for various options and styling tips for this gauge
+
+
+## Usage
 
 HTML
 ```html
@@ -99,4 +103,50 @@ cpuGauge.setValueAnimated(90, 1);
 | ```color (new)```    | An optional function that can return a color for current value  ```function(value) {}``` |
 
 
-#### [Live Demo](http://codepen.io/naikus/pen/BzkoLL)
+
+## That's all good, but what about React?
+```JSX
+import React from "react";
+import CreateReactClass from "create-react-class";
+import Gauge from "svg-gauge";
+
+const defaultOptions = {
+  animDuration: 1,
+  showValue: true,
+  max: 100
+  // Put any other defaults you want. e.g. dialStartAngle, dialEndAngle, radius, etc.
+};
+
+const Component = CreateReactClass({
+  displayName: "Gauge",
+  componentDidMount() {
+    this.renderGauge(this.props);
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const props = {this};
+    if(props.value !== nextProps.value) {
+      this.renderGauge(nextProps);
+    }
+    return false;
+  },
+
+  render() {
+    return (
+      <div className="gauge-container" ref={el => this.gaugeEl = el}></div>
+    );
+  },
+
+  renderGauge(props) {
+    const gaugeOptions = Object.assign({}, defaultOptions, props);
+    if(!this.gauge) {
+      this.gauge = Gauge(this.gaugeEl, gaugeOptions);
+    }else {
+      this.gauge.setValueAnimated(props.value, gaugeOptions.animDuration);
+    }
+  }
+});
+```
+
+## And Angular?
+Ha! [It's already there](https://github.com/mattlewis92/angular-gauge)
