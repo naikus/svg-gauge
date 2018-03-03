@@ -284,6 +284,9 @@
             pathTransition = "stroke " + dur + "ms ease";
             // textTransition = "fill " + dur + "ms ease";
 
+        setTimeout(function() {
+          gaugeValuePath.setAttribute('stroke', c);
+        }, dur / 2);
         gaugeValuePath.style = [
           "stroke: " + c,
           "-webkit-transition: " + pathTransition,
