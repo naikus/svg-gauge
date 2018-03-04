@@ -141,9 +141,8 @@ const Component = CreateReactClass({
     const gaugeOptions = Object.assign({}, defaultOptions, props);
     if(!this.gauge) {
       this.gauge = Gauge(this.gaugeEl, gaugeOptions);
-    }else {
-      this.gauge.setValueAnimated(props.value, gaugeOptions.animDuration);
     }
+    this.gauge.setValueAnimated(props.value, gaugeOptions.animDuration);
   }
 });
 ```
