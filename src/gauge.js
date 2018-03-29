@@ -50,7 +50,7 @@
         };
 
     function animate() {
-      var progress = currentIteration / iterations, 
+      var progress = currentIteration / iterations,
           value = change * easing(progress) + start;
       // console.log(progress + ", " + value);
       step(value, currentIteration);
@@ -93,7 +93,7 @@
     function shallowCopy(/* source, ...targets*/) {
       var target = arguments[0], sources = slice.call(arguments, 1);
       sources.forEach(function(s) {
-        for(k in s) {
+        for(var k in s) {
           if(s.hasOwnProperty(k)) {
             target[k] = s[k];
           }
@@ -131,11 +131,33 @@
       return percentage * gaugeSpanAngle / 100;
     }
 
-    function normalize(value, min, limit) {
-      var val = Number(value);
-      if(val > limit) return limit;
-      if(val < min) return min;
-      return val;
+    /**
+     * Check value. If value is number - set it to array
+     * @param {Array/Number} value
+     * @param {Number} min
+     * @param {Number} limit
+     * @param {String} color
+     * @return {Array}
+     */
+    function normalizeMultipleValue(value, min, limit, color) {
+      // If value is single (number) - set it ro array
+      // Value should be in format [{value: number, color: 'string'}]
+      if (!Array.isArray(value)) value = [{value, color}];
+
+      var values = value.map(function(v) {
+        var currentValue = Number(v.value);
+        if(currentValue > limit) currentValue = limit;
+        if(currentValue < min) currentValue = min;
+        return {
+          value: currentValue,
+          color: v.color,
+          label: v.label
+        };
+      });
+
+      return values.sort(function(a, b) {
+        return b.value - a.value;
+      });
     }
 
     function getValueInPercentage(value, min, max) {
@@ -166,10 +188,10 @@
     // REMEMBER!! angle=0 starts on X axis and then increases clockwise
     function getDialCoords(radius, startAngle, endAngle) {
       var cx = GaugeDefaults.centerX,
-          cy = GaugeDefaults.centerY;
+        cy = GaugeDefaults.centerY;
       return {
         end: getCartesian(cx, cy, radius, endAngle),
-      	start: getCartesian(cx, cy, radius, startAngle)
+        start: getCartesian(cx, cy, radius, startAngle)
       };
     }
 
@@ -193,7 +215,6 @@
       var gaugeContainer = elem,
           limit = opts.max,
           min = opts.min,
-          value = normalize(opts.value, min, limit),
           radius = opts.dialRadius,
           displayValue = opts.showValue,
           startAngle = opts.dialStartAngle,
@@ -204,10 +225,14 @@
           dialClass = opts.dialClass,
           gaugeClass = opts.gaugeClass,
           gaugeColor = opts.color,
+          defaultDuration = opts.duration || 1,
           gaugeValueElem,
           gaugeValuePath,
           label = opts.label,
-          instance;
+          instance,
+          gaugeElement,
+          value = normalizeMultipleValue(opts.value, min, limit, opts.color),
+          stacked = opts.stacked;
 
       if(startAngle < endAngle) {
         console.log("WARN! startAngle < endAngle, Swapping");
@@ -223,7 +248,7 @@
             largeArcFlag = typeof(largeArc) === "undefined" ? 1 : largeArc;
 
         return [
-          "M", start.x, start.y, 
+          "M", start.x, start.y,
           "A", radius, radius, 0, largeArcFlag, 1, end.x, end.y
         ].join(" ");
       }
@@ -241,17 +266,9 @@
           "alignment-baseline": "middle"
         });
 
-        gaugeValuePath = svg("path", {
-          "class": valueDialClass,
-          fill: "none",
-          stroke: "#666",
-          "stroke-width": 2.5,
-          d: pathString(radius, startAngle, startAngle) // value of 0
-        });
-
         var angle = getAngle(100, 360 - Math.abs(startAngle - endAngle));
         var flag = angle <= 180 ? 0 : 1;
-        var gaugeElement = svg("svg", {"viewBox": "0 0 100 100", "class": gaugeClass},
+        gaugeElement = svg("svg", {"viewBox": "0 0 100 100", "class": gaugeClass},
           [
             svg("path", {
               "class": dialClass,
@@ -261,75 +278,184 @@
               d: pathString(radius, startAngle, endAngle, flag)
             }),
             gaugeValueElem,
-            gaugeValuePath
           ]
         );
         elem.appendChild(gaugeElement);
       }
 
-      function updateGauge(theValue, frame) {
-        var val = getValueInPercentage(theValue, min, limit),
-            // angle = getAngle(val, 360 - Math.abs(endAngle - startAngle)),
-            angle = getAngle(val, 360 - Math.abs(startAngle - endAngle)),
-            // this is because we are using arc greater than 180deg
-            flag = angle <= 180 ? 0 : 1;
-        if(displayValue) {
-          gaugeValueElem.textContent = label.call(opts, theValue);
-        }
-        gaugeValuePath.setAttribute("d", pathString(radius, startAngle, angle + startAngle, flag));
+      /**
+       * Get valid label value
+       * @param {Number} value
+       * @return {*}
+       */
+      function getLabelValue(value) {
+        return label.call(opts, value);
       }
 
-      function setGaugeColor(value, duration) {        
-        var c = gaugeColor(value), 
-            dur = duration * 1000,
-            pathTransition = "stroke " + dur + "ms ease";
-            // textTransition = "fill " + dur + "ms ease";
+      /**
+       * Generate valid value string
+       * @param {String | Null} label - null only for first element
+       * @param {Number} value
+       */
+      function generateMultipleLabel(label, value) {
+        var stringValue = getLabelValue(value).toString();
+        if (!label) return stringValue;
+        return label + '/' + stringValue;
+      }
 
-        gaugeValuePath.style = [
-          "stroke: " + c,
+      /**
+       * Render label element
+       * @param {String} label
+       */
+      function renderLabel(label) {
+        if (displayValue) {
+          gaugeValueElem.textContent = label;
+        }
+      }
+
+      /**
+       * Create single gauge section element
+       * @param {Object} v
+       * @param {Number} totalAngle
+       * @return {Number}
+       */
+      function updateSingleGaugeSection(v, totalAngle, duration) {
+        var valueInPercentage = getValueInPercentage(v.value, min, limit),
+          // angle = getAngle(val, 360 - Math.abs(endAngle - startAngle)),
+          angle = getAngle(valueInPercentage, 360 - Math.abs(startAngle - endAngle)),
+          // this is because we are using arc greater than 180deg
+          flag = angle <= 180 ? 0 : 1;
+
+        var gaugeValuePath = svg("path", {
+          "class": valueDialClass,
+          fill: "none",
+          stroke: "#666",
+          "stroke-width": 2.5,
+          d: pathString(radius, startAngle, startAngle) // value of 0
+        });
+
+        gaugeElement.appendChild(gaugeValuePath);
+
+        if(!stacked) {
+          gaugeValuePath.setAttribute(
+            "d",
+            pathString(radius, startAngle, angle + startAngle, flag)
+          );
+        } else {
+          gaugeValuePath.setAttribute(
+            "d",
+            pathString(radius, startAngle + totalAngle, angle + startAngle + totalAngle, flag)
+          );
+        }
+
+        updateColor(gaugeValuePath, v.color, duration);
+        return totalAngle + angle;
+      }
+
+      /**
+       * Update gauge data
+       * @param {Array} value
+       * @param {Number} frame
+       * @param {Number} sectionStartPoint - this value need for calculate start section point
+       */
+      function updateGauge(value, frame, sectionStartPoint) {
+
+        var label;
+
+        // Remove old gauge sections
+        clearGaugeSections();
+
+        // Check sectionStartPoint
+        sectionStartPoint = sectionStartPoint || 0;
+
+        // Create single gauge section
+        value.forEach(function (v) {
+          label = generateMultipleLabel(label, v.value);
+          sectionStartPoint = updateSingleGaugeSection(v, sectionStartPoint);
+        });
+        renderLabel(label);
+      }
+
+      function updateColor(el, color, duration) {
+        var dur = duration * 1000,
+          pathTransition = "stroke " + dur + "ms ease";
+
+        el.style = [
+          "stroke: " + color,
           "-webkit-transition: " + pathTransition,
           "-moz-transition: " + pathTransition,
-          "transition: " + pathTransition,
+          "transition: " + pathTransition
         ].join(";");
-        /*
-        gaugeValueElem.style = [
-          "fill: " + c,
-          "-webkit-transition: " + textTransition,
-          "-moz-transition: " + textTransition,
-          "transition: " + textTransition,
-        ].join(";");
-        */
+      }
+
+      /**
+       * Remove all gauge sections
+       * @return {boolean}
+       */
+      function clearGaugeSections() {
+        var elements = gaugeElement.getElementsByClassName(defaultOptions.valueDialClass);
+        if (!elements.length) return false;
+        do {
+          gaugeElement.removeChild(elements[0]);
+        } while (elements.length);
       }
 
       instance = {
         setMaxValue: function(max) {
           limit = max;
         },
-        setValue: function(val) {
-          value = normalize(val, min, limit);
-          if(gaugeColor) {
-            setGaugeColor(value, 0)
-          }
-          updateGauge(value);
+        setValue: function (val) {
+          value = normalizeMultipleValue(val, min, limit, gaugeColor);
+          updateGauge(value, 0, 0);
         },
-        setValueAnimated: function(val, duration) {
-        	var oldVal = value;
-          value = normalize(val, min, limit);
-          if(oldVal === value) {
+        setValueAnimated: function (val, duration) {
+          if(!duration) duration = defaultDuration;
+          clearGaugeSections();
+          duration = (duration / val.length).toFixed(2) || 1;
+          var oldVal = value;
+          value = normalizeMultipleValue(val, min, limit, opts.color);
+          if (oldVal === value) {
             return;
           }
 
-          if(gaugeColor) {
-            setGaugeColor(value, duration);
+          if (gaugeColor) {
+            updateColor(value, duration, duration);
           }
-          Animation({
-            start: oldVal || 0,
-            end: value,
-            duration: duration || 1,
-            step: function(val, frame) {
-              updateGauge(val, frame);
-            }
+
+          // This sum of section end point need for set valid start point for each sections
+          var totalAngle = 0,
+            label;
+
+
+          value.forEach(function (v, i) {
+            // Set startSectionPoint for each section
+            value[i].startSectionPoint = totalAngle;
+
+            label = generateMultipleLabel(label, v.value);
+
+            // Write section step by step by duration
+            setTimeout(function () {
+              Animation({
+                start: 0,
+                end: v.value,
+                duration,
+                step: function (val, frame) {
+                  updateSingleGaugeSection(
+                    {value: val, color: v.color},
+                    value[i].startSectionPoint,
+                    duration
+                  );
+                }
+              });
+            }, duration * 1000 * i);
+
+            // Calculate current section value in percentage
+            var valueInPercentage = getValueInPercentage(v.value, min, limit);
+            totalAngle = totalAngle + getAngle(valueInPercentage, 360 - Math.abs(startAngle - endAngle));
+
           });
+
+          renderLabel(label);
         },
         getValue: function() {
           return value;
