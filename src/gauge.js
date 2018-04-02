@@ -142,7 +142,9 @@
     function normalizeMultipleValue(value, min, limit, color) {
       // If value is single (number) - set it ro array
       // Value should be in format [{value: number, color: 'string'}]
-      if (!Array.isArray(value)) value = [{value, color}];
+      if (!Array.isArray(value)){
+        value = [{value: value, color: color}];
+      }
 
       var values = value.map(function(v) {
         var currentValue = Number(v.value);
@@ -161,7 +163,7 @@
     }
 
     function getValueInPercentage(value, min, max) {
-      const newMax = max - min, newVal = value - min;
+      var newMax = max - min, newVal = value - min;
       return 100 * newVal / newMax;
       // var absMin = Math.abs(min);
       // return 100 * (absMin + value) / (max + absMin);
@@ -299,7 +301,9 @@
        */
       function generateMultipleLabel(label, value) {
         var stringValue = getLabelValue(value).toString();
-        if (!label) return stringValue;
+        if (!label){
+          return stringValue;
+        }
         return label + '/' + stringValue;
       }
 
@@ -394,7 +398,9 @@
        */
       function clearGaugeSections() {
         var elements = gaugeElement.getElementsByClassName(defaultOptions.valueDialClass);
-        if (!elements.length) return false;
+        if (!elements.length) {
+          return false;
+        }
         do {
           gaugeElement.removeChild(elements[0]);
         } while (elements.length);
@@ -409,7 +415,9 @@
           updateGauge(value, 0, 0);
         },
         setValueAnimated: function (val, duration) {
-          if(!duration) duration = defaultDuration;
+          if(!duration) {
+            duration = defaultDuration;
+          }
           clearGaugeSections();
           duration = (duration / val.length).toFixed(2) || 1;
           var oldVal = value;
@@ -438,7 +446,7 @@
               Animation({
                 start: 0,
                 end: v.value,
-                duration,
+                duration: duration,
                 step: function (val, frame) {
                   updateSingleGaugeSection(
                     {value: val, color: v.color},
