@@ -238,7 +238,8 @@
           "font-family": "sans-serif",
           "font-weight": "normal",
           "text-anchor": "middle",
-          "alignment-baseline": "middle"
+          "alignment-baseline": "middle",
+          "dominant-baseline": "central"
         });
 
         gaugeValuePath = svg("path", {
