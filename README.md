@@ -101,6 +101,7 @@ cpuGauge.setValueAnimated(90, 1);
 | ```valueDialClass``` | The CSS class of the gauge's fill (value dial) (```value```) |
 | ```valueTextClass``` | The CSS class of the gauge's text (```value-text```) |
 | ```color (new)```    | An optional function that can return a color for current value  ```function(value) {}``` |
+| ```viewBox (new)```  | An optional string that specifies the crop region (```0 0 100 100```) |
 
 
 
