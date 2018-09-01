@@ -101,6 +101,8 @@ cpuGauge.setValueAnimated(90, 1);
 | ```valueDialClass``` | The CSS class of the gauge's fill (value dial) (```value```) |
 | ```valueTextClass``` | The CSS class of the gauge's text (```value-text```) |
 | ```color (new)```    | An optional function that can return a color for current value  ```function(value) {}``` |
+| ```value```          | Can be integer (```value={10}```) or collection of values (```value={[value: 10, color: "red", label: "error"]}```)  |
+| ```stacked ``` | This value will change partition display mode. If (```stacked={false}```) sections will overlap each other. If (```stacked={true}```) sections will be rendered one after another  |
 
 
 
