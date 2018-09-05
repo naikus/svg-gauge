@@ -34,6 +34,8 @@
   /* ------------------- Alternate Style ------------------------- */
 
   .gauge-container.two {
+    height: auto;
+    border-bottom: 1px solid white;
   }
   .gauge-container.two > .gauge > .dial {
     stroke: #334455;
