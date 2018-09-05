@@ -287,12 +287,10 @@
             pathTransition = "stroke " + dur + "ms ease";
             // textTransition = "fill " + dur + "ms ease";
 
-        gaugeValuePath.style = [
-          "stroke: " + c,
-          "-webkit-transition: " + pathTransition,
-          "-moz-transition: " + pathTransition,
-          "transition: " + pathTransition,
-        ].join(";");
+        gaugeValuePath.style.stroke = c;
+        gaugeValuePath.style["-webkit-transition"] = pathTransition;
+        gaugeValuePath.style["-moz-transition"] = pathTransition;
+        gaugeValuePath.style.transition = pathTransition;
         /*
         gaugeValueElem.style = [
           "fill: " + c,
