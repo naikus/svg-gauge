@@ -139,7 +139,7 @@
     }
 
     function getValueInPercentage(value, min, max) {
-      const newMax = max - min, newVal = value - min;
+      var newMax = max - min, newVal = value - min;
       return 100 * newVal / newMax;
       // var absMin = Math.abs(min);
       // return 100 * (absMin + value) / (max + absMin);
