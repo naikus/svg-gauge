@@ -1,8 +1,8 @@
 var gulp = require("gulp"),
     del = require("del"),
     concat = require("gulp-concat"),
-    uglify = require("gulp-uglify"),
-    eventStream = require("event-stream");
+    uglify = require("gulp-uglify");
+    // eventStream = require("event-stream");
 
 
 var config = {

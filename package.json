@@ -26,7 +26,6 @@
   "homepage": "https://github.com/naikus/svg-gauge#readme",
   "devDependencies": {
     "del": "^3.0.0",
-    "event-stream": "^4.0.1",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-jshint": "^2.1.0",
