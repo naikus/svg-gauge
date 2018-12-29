@@ -31,17 +31,17 @@ gulp.task("clean", function(cb) {
 });
 
 
-gulp.task("build", [], function() {
+gulp.task("build", function() {
    // do other build things
    // gulp.start("jshint");
 
-   return eventStream.merge(
-      gulp.src(["src/gauge.js"]/*, {debug: true}*/)
-            .pipe(concat("gauge.js"))
-            .pipe(gulp.dest(config.dist.dir))
-            .pipe(concat("gauge.min.js"))
-            .pipe(gulp.dest(config.dist.dir))
-            .pipe(uglify({comments: /^\/\*\!*/}))
-            .pipe(gulp.dest(config.dist.dir))
-   );
+   // return eventStream.merge(
+    return gulp.src(["src/gauge.js"]/*, {debug: true}*/)
+        .pipe(concat("gauge.js"))
+        .pipe(gulp.dest(config.dist.dir))
+        .pipe(concat("gauge.min.js"))
+        .pipe(gulp.dest(config.dist.dir))
+        .pipe(uglify())
+        .pipe(gulp.dest(config.dist.dir))
+   // );
 });
