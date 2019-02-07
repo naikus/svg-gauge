@@ -247,7 +247,7 @@
           "class": valueDialClass,
           fill: "none",
           stroke: "#666",
-          "stroke-width": 2.5,
+          "stroke-width": opts.valueStrokeWidth,
           d: pathString(radius, startAngle, startAngle) // value of 0
         });
 
@@ -259,7 +259,7 @@
               "class": dialClass,
               fill: "none",
               stroke: "#eee",
-              "stroke-width": 2,
+              "stroke-width": opts.dialStrokeWidth,
               d: pathString(radius, startAngle, endAngle, flag)
             }),
             gaugeValueElem,
