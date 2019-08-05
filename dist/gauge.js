@@ -93,7 +93,7 @@
     function shallowCopy(/* source, ...targets*/) {
       var target = arguments[0], sources = slice.call(arguments, 1);
       sources.forEach(function(s) {
-        for(k in s) {
+        for(var k in s) {
           if(s.hasOwnProperty(k)) {
             target[k] = s[k];
           }
