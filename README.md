@@ -118,7 +118,7 @@ const defaultOptions = {
   // Put any other defaults you want. e.g. dialStartAngle, dialEndAngle, radius, etc.
 };
 
-export const Gauge = props => {
+const Gauge = props => {
   const gaugeEl = useRef(null);
   const gaugeRef = useRef(null);
   useEffect(() => {
