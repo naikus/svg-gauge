@@ -107,45 +107,41 @@ cpuGauge.setValueAnimated(90, 1);
 
 ## That's all good, but what about React?
 ```JSX
-import React from "react";
-import CreateReactClass from "create-react-class";
-import Gauge from "svg-gauge";
+import React, { useEffect, useRef } from "react";
+import SvgGauge from "svg-gauge";
 
 const defaultOptions = {
   animDuration: 1,
   showValue: true,
+  initialValue: 0,
   max: 100
   // Put any other defaults you want. e.g. dialStartAngle, dialEndAngle, radius, etc.
 };
 
-const Component = CreateReactClass({
-  displayName: "Gauge",
-  componentDidMount() {
-    this.renderGauge(this.props);
-  },
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const {props} = this;
-    if(props.value !== nextProps.value) {
-      this.renderGauge(nextProps);
+const Gauge = props => {
+  const gaugeEl = useRef(null);
+  const gaugeRef = useRef(null);
+  useEffect(() => {
+    if (!gaugeRef.current) {
+      const options = { ...defaultOptions, ...props };
+      gaugeRef.current = SvgGauge(gaugeEl.current, options);
+      gaugeRef.current.setValue(options.initialValue);
     }
-    return false;
-  },
+    gaugeRef.current.setValueAnimated(props.value, 1);
+  }, [props]);
 
-  render() {
-    return (
-      <div className="gauge-container" ref={el => this.gaugeEl = el}></div>
-    );
-  },
+  return <div ref={gaugeEl} className="gauge-container" />;
+};
 
-  renderGauge(props) {
-    const gaugeOptions = Object.assign({}, defaultOptions, props);
-    if(!this.gauge) {
-      this.gauge = Gauge(this.gaugeEl, gaugeOptions);
-    }
-    this.gauge.setValueAnimated(props.value, gaugeOptions.animDuration);
-  }
-});
+export default Gauge;
+
+// to render:
+const renderGauge = () => (
+  <Gauge
+    value={42}
+    // any other options you want
+  />
+);
 ```
 
 ## And Angular?
