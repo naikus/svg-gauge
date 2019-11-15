@@ -282,7 +282,7 @@
       }
 
       function setGaugeColor(value, duration) {        
-        var c = gaugeColor(value), 
+        var c = gaugeColor.call(opts, value), 
             dur = duration * 1000,
             pathTransition = "stroke " + dur + "ms ease";
             // textTransition = "fill " + dur + "ms ease";
