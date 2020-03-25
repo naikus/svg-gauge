@@ -15,11 +15,15 @@
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="dark.css" />
     <style>
+      .info {
+        padding: 20px;
+      }
       .example {
         overflow: auto;
-        padding: 10px;
+        border-bottom: 1px solid rgba(0,0,0,0.6);
         box-sizing: border-box;
         clear: both;
+        margin-bottom: 30px;
       }
       .example > .code, .example > .display {
         box-sizing: border-box;
@@ -44,16 +48,16 @@
 
 
       @media only screen and (min-device-width: 768px) {
+        .gauge-container {
+          width: 200px;
+          height: 200px;
+        }
         .example > .code {
           width: 65%;
-        }
-        .example > .display {
-          width: 35%;
-        }
-        .example > .code {
           float: left;
         }
         .example > .display {
+          width: 35%;
           float: right;
           padding: 10px;
         }
@@ -65,13 +69,14 @@
   </head>
 
   <body>
-    <h2>SVG Gauge</h2>
-    <h4>Minimalistic, zero dependency animated gauge widget</h4>
-    <p>
-      All the guages are styled via CSS. See gauge-test.css for styling for each of these gauges
-      below.
-    </p>
-
+    <div class="info">
+      <h2>SVG Gauge</h2>
+      <h4>Minimalistic, zero dependency animated gauge widget</h4>
+      <p>
+        All the guages are styled via CSS. See gauge-test.css for styling for each of these gauges
+        below.
+      </p>
+    </div>
 
     <div class="example">
       <div class="code">

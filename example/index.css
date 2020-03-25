@@ -1,16 +1,18 @@
   body {
-    background-color: rgba(0,0,0,0.8);
-    color: #999;
-    font-family: Hevletica, 'sans-serif';
+    background-color: #1e2933;
+    color: #b9cddf;
+    font-family: Hevletica, sans-serif;
+    padding: 0;
+    margin: 0;
   }
 
   /* ------------------- Default Style ------------------------- */
 
   .gauge-container {
-    width: 200px;
-    height: 200px;
+    width: auto;
+    height: auto;
     display: block;
-    float: left;
+    /* float: left; */
     padding: 10px;
     overflow: hidden;
   }
@@ -85,9 +87,15 @@
   .gauge-container.four > .gauge > .value-text {
     fill: #BE80FF;
   }
+  .gauge-container.four .text-container {
+    transform: translate3d(-13%, -11%, 0)
+  }
 
 
 
+  .gauge-container.five .text-container {
+    transform: translate3d(0, 7%, 0);
+  }
   .gauge-container.five > .gauge > .dial {
     stroke: #334455;
     fill: "#334455";

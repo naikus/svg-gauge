@@ -253,19 +253,17 @@
 
         var angle = getAngle(100, 360 - Math.abs(startAngle - endAngle));
         var flag = angle <= 180 ? 0 : 1;
-        var gaugeElement = svg("svg", {"viewBox": viewBox || "0 0 100 100", "class": gaugeClass},
-          [
-            svg("path", {
-              "class": dialClass,
-              fill: "none",
-              stroke: "#eee",
-              "stroke-width": 2,
-              d: pathString(radius, startAngle, endAngle, flag)
-            }),
-            gaugeValueElem,
-            gaugeValuePath
-          ]
-        );
+        var gaugeElement = svg("svg", {"viewBox": viewBox || "0 0 100 100", "class": gaugeClass}, [
+          svg("path", {
+            "class": dialClass,
+            fill: "none",
+            stroke: "#eee",
+            "stroke-width": 2,
+            d: pathString(radius, startAngle, endAngle, flag)
+          }),
+          svg("g", { "class": "text-container" }, [gaugeValueElem]),
+          gaugeValuePath
+        ]);
         elem.appendChild(gaugeElement);
       }
 

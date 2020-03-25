@@ -7,9 +7,10 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 .hljs {
   display: block;
   overflow-x: auto;
-  padding: 0.5em;
-  background: #444;
+  background: #24303d;
   -webkit-text-size-adjust: none;
+  font-size: 1.2em;
+  padding: 1em;
 }
 
 .hljs-keyword,
@@ -19,12 +20,12 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 .hljs-flow,
 .nginx .hljs-title,
 .tex .hljs-special {
-  color: white;
+  color: rgb(117, 173, 238);
 }
 
 .hljs,
 .hljs-subst {
-  color: #ddd;
+  color: rgb(182, 198, 204);
 }
 
 .hljs-string,
@@ -57,7 +58,7 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 .tex .hljs-command,
 .hljs-prompt,
 .coffeescript .hljs-attribute {
-  color: #d88;
+  color: rgb(235, 122, 122);
 }
 
 .hljs-comment,
@@ -69,7 +70,7 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 .hljs-shebang,
 .apache .hljs-sqbracket,
 .tex .hljs-formula {
-  color: #777;
+  color: #4f6171;
 }
 
 .hljs-keyword,
