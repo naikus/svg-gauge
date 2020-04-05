@@ -27,17 +27,17 @@ CSS
   display: block;
   padding: 10px;
 }
-.gauge-container > .gauge > .dial {
+.gauge-container > .gauge .dial {
   stroke: #eee;
   stroke-width: 2;
   fill: rgba(0,0,0,0);
 }
-.gauge-container > .gauge > .value {
+.gauge-container > .gauge .value {
   stroke: rgb(47, 227, 255);
   stroke-width: 2;
   fill: rgba(0,0,0,0);
 }
-.gauge-container > .gauge > .value-text {
+.gauge-container > .gauge .value-text {
   fill: rgb(47, 227, 255);
   font-family: sans-serif;
   font-weight: bold;
