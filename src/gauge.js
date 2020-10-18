@@ -227,15 +227,15 @@
         var valueStyles = getComputedStyle((elem.getElementsByClassName("value") || [])[0]);
         var strokeWidth = parseInt(valueStyles.strokeWidth.replace("px", ""));
 
-        var x1 = 50 - radius - (strokeWidth / 2) + 2;
+        var x1 = GaugeDefaults.centerX - radius - (strokeWidth / 2) + 2;
         var y1 = GaugeDefaults.centerY;
         var angle = 180 + startAngle + endAngle;
         return {
           x1,
           y1,
-          x2: 50 - radius + (strokeWidth / 2),
+          x2: GaugeDefaults.centerX - radius + (strokeWidth / 2),
           y2: y1,
-          transform: `rotate(${angle} 50 50)`,
+          transform: `rotate(${angle} ${GaugeDefaults.centerX} ${GaugeDefaults.centerY})`,
         }
       }
 
@@ -253,8 +253,8 @@
 
       function initializeGauge(elem) {
         gaugeValueElem = svg("text", {
-          x: 50,
-          y: 50,
+          x: GaugeDefaults.centerX,
+          y: GaugeDefaults.centerY,
           fill: "#999",
           "class": valueTextClass,
           "font-size": "100%",
@@ -326,7 +326,7 @@
           valueToBackground && gaugeDialPath,
           showValueCursor && gaugeValueCursorLinePath,
           showValueCursor && gaugeValueCursorTrianglePath
-        ].filter(x => x));
+        ].filter(Boolean));
         elem.appendChild(gaugeElement);
       }
 
