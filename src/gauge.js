@@ -266,7 +266,7 @@
         });
 
         gaugeValuePath = svg("path", {
-          "class": valueDialClass,
+          class: valueDialClass,
           fill: "none",
           stroke: "#666",
           "stroke-width": 2.5,
@@ -277,7 +277,7 @@
           gaugeValueCursorLinePath = svg("line", {
             fill: "none",
             stroke: "black",
-            className: "cursor-line",
+            class: "cursor-line",
             opacity: "0",
             "stroke-dasharray": "2",
             "stroke-dashoffset": "0.5",
@@ -286,6 +286,7 @@
 
           gaugeValueCursorTrianglePath = svg("path", {
             fill: "black",
+            class: "cursor-triangle",
             stroke: "black",
             opacity: "0",
             "stroke-width": 0.5
