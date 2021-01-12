@@ -2,7 +2,9 @@
 Minmalistic, configurable, animated SVG gauge. Zero dependencies
 
 
-## Consider making a small donation :)
+## Buy me a coffee ☕
+If you like my work please consider making a small donation
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z01L1TS)
 
 
