@@ -2,6 +2,8 @@
 Minmalistic, configurable, animated SVG gauge. Zero dependencies
 
 
+## Consider making a small donation :)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z01L1TS)
 
 
 ## Migration from 1.0.2
