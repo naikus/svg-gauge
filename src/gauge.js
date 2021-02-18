@@ -179,7 +179,7 @@
      * {
      *    dialStartAngle: The angle to start the dial. MUST be greater than dialEndAngle. Default 135deg
      *    dialEndAngle: The angle to end the dial. Default 45deg
-     *    radius: The gauge's radius. Default 400
+     *    dialRadius: The gauge's radius. Default 400
      *    max: The maximum value of the gauge. Default 100
      *    value: The starting value of the gauge. Default 0
      *    label: The function on how to render the center label (Should return a value)
