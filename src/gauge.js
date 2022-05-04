@@ -302,6 +302,7 @@
       instance = {
         setMaxValue: function(max) {
           limit = max;
+          updateGauge(value);
         },
         setValue: function(val) {
           value = normalize(val, min, limit);
