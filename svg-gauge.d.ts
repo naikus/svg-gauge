@@ -18,7 +18,7 @@ declare module 'svg-gauge' {
     /** The radius of the gauge
      * @default 40
      */
-    radius?: number
+    dialRadius?: number
     /** The minimum value for the gauge. This can be a negative value
      * @default 0
      */
